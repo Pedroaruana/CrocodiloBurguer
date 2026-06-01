@@ -2,10 +2,13 @@
 
 > Cardápio digital mobile-first estilo Goomer — React, carrinho com persistência, checkout e animações. Sem backend.
 
+🌐 **[Ver projeto ao vivo](https://crocodilo-burguer.vercel.app)** — Deploy na Vercel
+
 ![React](https://img.shields.io/badge/React-18.3-61dafb?style=flat-square&logo=react)
 ![Vite](https://img.shields.io/badge/Vite-5.4-646cff?style=flat-square&logo=vite)
 ![CSS3](https://img.shields.io/badge/CSS3-Variables-1572b6?style=flat-square&logo=css3)
 ![Status](https://img.shields.io/badge/status-online-2d6a4f?style=flat-square)
+![Vercel](https://img.shields.io/badge/deploy-Vercel-black?style=flat-square&logo=vercel)
 
 ---
 
