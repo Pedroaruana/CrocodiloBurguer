@@ -116,12 +116,6 @@ npm run dev -- --host
 
 Abra o IP que aparecer no terminal no navegador do celular.
 
-### Build de produção
-
-```bash
-npm run build
-npm run preview
-```
 ---
 
 ## 🛠️ Tecnologias
