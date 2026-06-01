@@ -78,16 +78,6 @@ Abra o IP que aparecer no terminal no navegador do celular.
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-  <img src="screenshots/cardapio.png" width="30%" alt="Cardápio" />
-  <img src="screenshots/produto.png" width="30%" alt="Modal do produto" />
-  <img src="screenshots/checkout.png" width="30%" alt="Checkout" />
-</div>
-
----
-
 ## 👤 Autor
 
 Feito com 🐊 por **Pedro**
