@@ -11,7 +11,7 @@
 
 ## 📱 Sobre o projeto
 
-Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, desenvolvido como projeto de portfólio com foco em UI/UX mobile. A aplicação simula a experiência de um app de delivery real — com login, carrinho, checkout, pagamento via PIX e cartão, acompanhamento de pedidos em tempo real e muito mais. Tudo isso sem banco de dados, 100% front-end.
+Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, desenvolvido com foco em UI/UX mobile. A aplicação simula a experiência de um app de delivery real — com login, carrinho, checkout, pagamento via PIX e cartão, acompanhamento de pedidos em tempo real e muito mais. Tudo isso sem banco de dados, 100% front-end.
 
 ---
 
@@ -122,40 +122,6 @@ Abra o IP que aparecer no terminal no navegador do celular.
 npm run build
 npm run preview
 ```
-
----
-
-## 🗂️ Estrutura do projeto
-
-```
-src/
-├── components/
-│   ├── Logo.jsx              # SVG do crocodilo com hambúrguer
-│   ├── Header.jsx            # Banner com stats, login e pedidos
-│   ├── SearchBar.jsx         # Busca em tempo real
-│   ├── CategoryNav.jsx       # Nav sticky com scroll-spy
-│   ├── ProductCard.jsx       # Card horizontal estilo Goomer + estrelas
-│   ├── ProductModal.jsx      # Bottom sheet com detalhes e reviews
-│   ├── PromoBanner.jsx       # Carrossel de promoções animado
-│   ├── LegalBanner.jsx       # Aviso legal IBAMA com ticker e selo
-│   ├── FlyingItem.jsx        # Animação item voando até o carrinho
-│   ├── CartBar.jsx           # Barra flutuante do carrinho
-│   ├── CartDrawer.jsx        # Drawer completo do carrinho
-│   ├── CheckoutPage.jsx      # Formulário de pedido completo
-│   ├── PixQRSection.jsx      # QR Code PIX com countdown
-│   ├── CardFormSection.jsx   # Formulário de cartão com detecção de bandeira
-│   ├── AuthModal.jsx         # Modal de login e cadastro
-│   └── OrdersPage.jsx        # Página de acompanhamento de pedidos
-├── context/
-│   ├── CartContext.jsx       # Estado global do carrinho (useReducer)
-│   └── AuthContext.jsx       # Autenticação com localStorage
-├── data/
-│   └── menu.js               # Dados estáticos: 31 produtos em 7 categorias
-├── App.jsx
-├── App.css
-└── index.css                 # Design system com CSS custom properties
-```
-
 ---
 
 ## 🛠️ Tecnologias
@@ -168,28 +134,6 @@ src/
 
 ---
 
-## 🎨 Design System
-
-| Token | Valor | Uso |
-|---|---|---|
-| `--croco-green` | `#1a472a` | Cor principal |
-| `--croco-mid` | `#2d6a4f` | Botões e destaques |
-| `--croco-light` | `#52b788` | Hover e acentos |
-| `--accent-yellow` | `#f9c74f` | Destaques quentes |
-| `--accent-orange` | `#f4a261` | Thumbnails dos produtos |
-| `--accent-red` | `#e63946` | Badges e alertas |
-
----
-
 ## 👤 Autor
 
 Feito com 🐊 por **Pedro Aruanã**
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat-square&logo=linkedin)](https://linkedin.com/in/seu-perfil)
-[![GitHub](https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github)](https://github.com/Pedroaruana)
-
----
-
-## 📄 Licença
-
-MIT — fique à vontade para usar como base para seus projetos.
