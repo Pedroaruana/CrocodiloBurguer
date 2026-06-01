@@ -33,6 +33,9 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, desenvolvid
   <img src="screenshots/cardapio.png" width="30%" alt="Cardápio" />
   <img src="screenshots/carrinho.png" width="30%" alt="Modal do produto" />
   <img src="screenshots/checkout.png" width="30%" alt="Checkout" />
+  <img src="screenshots/pedidos.png" width="30%" alt="Checkout" />
+  <img src="screenshots/aviso.png" width="30%" alt="Checkout" />
+  <img src="screenshots/pix.png" width="30%" alt="Checkout" />
 </div>
 
 
