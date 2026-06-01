@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
+import { saveOrder } from './OrdersPage'
 import { restaurant } from '../data/menu'
+import PixQRSection from './PixQRSection'
+import CardFormSection from './CardFormSection'
 import './CheckoutPage.css'
 
 const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -14,8 +18,10 @@ const PAYMENTS = [
 
 export default function CheckoutPage({ onClose }) {
   const { state, dispatch, subtotal } = useCart()
+  const { currentUser } = useAuth()
   const [payment, setPayment] = useState('pix')
-  const [troco, setTroco] = useState('')
+  const [troco, setTroco]     = useState('')
+  const [cardData, setCardData] = useState({})
   const [success, setSuccess] = useState(false)
   const [form, setForm] = useState({
     name: '', phone: '', cep: '',
@@ -33,6 +39,24 @@ export default function CheckoutPage({ onClose }) {
       alert('Preencha seu nome, telefone, rua e número.')
       return
     }
+    if ((payment === 'credit' || payment === 'debit') && (
+      !cardData.number || cardData.number.length < 13 ||
+      !cardData.name   || !cardData.expiry || cardData.expiry.length < 5 ||
+      !cardData.cvv    || cardData.cvv.length < 3
+    )) {
+      alert('Preencha todos os dados do cartão corretamente.')
+      return
+    }
+    const order = {
+      id: Math.floor(Math.random() * 90000 + 10000).toString(),
+      userEmail: currentUser?.email ?? 'guest',
+      items: state.items,
+      total,
+      address: form,
+      payment,
+      createdAt: Date.now(),
+    }
+    saveOrder(order)
     setSuccess(true)
     dispatch({ type: 'CLEAR' })
   }
@@ -171,6 +195,14 @@ export default function CheckoutPage({ onClose }) {
                 />
               </div>
             )}
+
+            {payment === 'pix' && (
+              <PixQRSection total={total} onConfirm={handleConfirm} />
+            )}
+
+            {(payment === 'credit' || payment === 'debit') && (
+              <CardFormSection type={payment} onChange={setCardData} />
+            )}
           </div>
         </div>
 
@@ -184,9 +216,13 @@ export default function CheckoutPage({ onClose }) {
           <div className="checkout-total-row grand">
             <span>Total</span><span>{fmt(total)}</span>
           </div>
-          <button className="checkout-confirm-btn" onClick={handleConfirm}>
-            ✅ Confirmar pedido
-          </button>
+          {payment !== 'pix' && (
+            <button className="checkout-confirm-btn" onClick={handleConfirm}>
+              {payment === 'credit' ? '💳 Confirmar pagamento'
+               : payment === 'debit' ? '🏧 Confirmar pagamento'
+               : '✅ Confirmar pedido'}
+            </button>
+          )}
         </div>
       </div>
     </div>

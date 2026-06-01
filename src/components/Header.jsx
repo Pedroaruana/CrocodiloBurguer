@@ -1,7 +1,9 @@
 import Logo from './Logo'
+import { useAuth } from '../context/AuthContext'
 import './Header.css'
 
-export default function Header({ restaurant }) {
+export default function Header({ restaurant, onLoginClick, onOrdersClick }) {
+  const { currentUser, logout } = useAuth()
   const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
   return (
@@ -20,6 +22,28 @@ export default function Header({ restaurant }) {
             {restaurant.isOpen ? `Aberto · ${restaurant.openHours}` : 'Fechado agora'}
           </div>
         </div>
+
+        {/* Login / User button */}
+        {currentUser ? (
+          <div className="header-user">
+            <button className="header-orders-btn" onClick={onOrdersClick} aria-label="Meus pedidos">
+              <span>📦</span>
+              <span>Pedidos</span>
+            </button>
+            <div className="header-avatar" title={currentUser.name}>
+              {currentUser.name.charAt(0).toUpperCase()}
+            </div>
+            <div className="header-user-info">
+              <span className="header-user-name">{currentUser.name.split(' ')[0]}</span>
+              <button className="header-logout" onClick={logout}>Sair</button>
+            </div>
+          </div>
+        ) : (
+          <button className="header-login-btn" onClick={onLoginClick}>
+            <span>👤</span>
+            <span>Entrar</span>
+          </button>
+        )}
       </div>
 
       <div className="header-divider" />

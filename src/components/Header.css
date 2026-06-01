@@ -148,3 +148,104 @@
   color: rgba(255,255,255,0.6);
   position: relative;
 }
+
+/* Login button */
+.header-login-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  backdrop-filter: blur(4px);
+}
+
+.header-login-btn span:first-child {
+  font-size: 20px;
+}
+
+.header-login-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Logged-in user */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  color: var(--croco-dark);
+  font-size: 17px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.header-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+}
+
+.header-logout {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.header-logout:hover {
+  color: var(--accent-yellow);
+}
+
+.header-orders-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 10px;
+  padding: 6px 10px;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.header-orders-btn span:first-child { font-size: 18px; }
+.header-orders-btn:hover { background: rgba(255,255,255,0.28); }

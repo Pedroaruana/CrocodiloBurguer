@@ -15,6 +15,7 @@ export const restaurant = {
 
 export const categories = [
   { id: 'destaques',   label: 'Destaques',   emoji: '⭐' },
+  { id: 'exoticos',   label: 'Exóticos',    emoji: '🦎' },
   { id: 'burgers',     label: 'Burgers',      emoji: '🍔' },
   { id: 'combos',      label: 'Combos',       emoji: '🍟' },
   { id: 'bebidas',     label: 'Bebidas',      emoji: '🥤' },
@@ -27,6 +28,47 @@ export const products = [
   { id: 1,  category: 'destaques', name: 'Croco Smash',       rating: 4.9, reviewCount: 847,  description: 'Dois smash burgers 120g, queijo americano duplo, cebola caramelizada, picles crocante e molho secreto da jaula', price: 42.90, badge: '🔥 Mais pedido', badgeColor: '#e63946', gradient: 'linear-gradient(145deg, #1a472a 0%, #f4a261 100%)', emoji: '🍔' },
   { id: 2,  category: 'destaques', name: 'Combo Croco Smash', rating: 4.8, reviewCount: 523,  description: 'Croco Smash + batata crinkle G + bebida 400ml à escolha', price: 59.90, badge: '⭐ Favorito', badgeColor: '#d4a017', gradient: 'linear-gradient(145deg, #2d6a4f 0%, #e76f51 100%)', emoji: '🍔🍟' },
   { id: 3,  category: 'destaques', name: 'Jacarezão',          rating: 4.7, reviewCount: 312,  description: 'Blend artesanal 220g, bacon duplo, queijo gouda, rúcula, geleia de pimenta e maionese trufada', price: 49.90, badge: '🌶️ Novo', badgeColor: '#e63946', gradient: 'linear-gradient(145deg, #5c1a1a 0%, #f9c74f 100%)', emoji: '🍔' },
+
+  // ── EXÓTICOS ───────────────────────────────────────────────────────────────
+  {
+    id: 29,
+    category: 'exoticos',
+    name: 'Yacaré Selvagem',
+    description: 'Blend 180g de carne de Caiman crocodilus yacare (Yacaré-do-Pantanal) — criação IBAMA autorizada. Queijo brie, rúcula, tomate seco, geleia de pimenta e maionese de tucupi',
+    price: 64.90,
+    badge: '🐊 Exclusivo',
+    badgeColor: '#1a472a',
+    rating: 4.9,
+    reviewCount: 134,
+    gradient: 'linear-gradient(145deg, #0d2b1a 0%, #52b788 100%)',
+    emoji: '🐊',
+  },
+  {
+    id: 30,
+    category: 'exoticos',
+    name: 'Pato Real',
+    description: 'Blend artesanal 180g de peito de pato confitado, queijo camembert, geleia de laranja, rúcula selvagem, cebola caramelizada no vinho tinto e brioche artesanal',
+    price: 58.90,
+    badge: '🦆 Chef\'s Pick',
+    badgeColor: '#7b4f00',
+    rating: 4.8,
+    reviewCount: 89,
+    gradient: 'linear-gradient(145deg, #3b1a0a 0%, #d4a017 100%)',
+    emoji: '🦆',
+  },
+  {
+    id: 31,
+    category: 'exoticos',
+    name: 'Pirarucu da Amazônia',
+    description: 'Hambúrguer de pirarucu 160g defumado na lenha, queijo coalho grelhado, vinagrete de manga, pimenta-de-cheiro, coentro fresco e pão de tapioca artesanal',
+    price: 56.90,
+    badge: '🐟 Amazônia',
+    badgeColor: '#1565c0',
+    rating: 4.7,
+    reviewCount: 76,
+    gradient: 'linear-gradient(145deg, #0d3b6e 0%, #48cae4 100%)',
+    emoji: '🐟',
+  },
 
   // ── BURGERS ────────────────────────────────────────────────────────────────
   { id: 4,  category: 'burgers',   name: 'Croco Classic',     rating: 4.6, reviewCount: 1203, description: 'Blend angus 180g, queijo cheddar, alface americana, tomate, cebola roxa e molho especial da casa', price: 32.90, gradient: 'linear-gradient(145deg, #2d6a4f 0%, #95d5b2 100%)', emoji: '🍔' },

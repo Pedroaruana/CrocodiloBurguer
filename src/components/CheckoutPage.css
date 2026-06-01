@@ -365,3 +365,272 @@
   font-weight: 700;
   margin-top: 8px;
 }
+
+/* ── PIX Section ────────────────────────────────────────── */
+.pix-section {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.pix-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+}
+
+.pix-logo {
+  font-size: 28px;
+}
+
+.pix-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.pix-subtitle {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.pix-qr-wrap {
+  position: relative;
+  border: 3px solid #32BCAD;
+  border-radius: 12px;
+  padding: 10px;
+  background: white;
+}
+
+.pix-qr {
+  transition: filter 0.3s;
+}
+
+.pix-qr.expired {
+  filter: blur(4px);
+}
+
+.pix-expired-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-red);
+  background: rgba(255,255,255,0.85);
+  border-radius: 10px;
+}
+
+.pix-expired-overlay span { font-size: 28px; }
+
+.pix-expired-overlay button {
+  background: var(--croco-mid);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+}
+
+.pix-timer {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.pix-timer.urgent { color: var(--accent-red); animation: pulse-dot 1s infinite; }
+.pix-timer strong { font-size: 15px; }
+
+.pix-amount, .pix-key {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.pix-amount-label, .pix-key-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.pix-amount-value {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--croco-mid);
+}
+
+.pix-key-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: monospace;
+}
+
+.pix-copy-btn {
+  width: 100%;
+  height: 44px;
+  border: 2px dashed var(--croco-light);
+  border-radius: 12px;
+  background: rgba(82,183,136,0.07);
+  color: var(--croco-mid);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pix-copy-btn.copied {
+  background: var(--croco-mid);
+  color: white;
+  border-color: var(--croco-mid);
+}
+
+.pix-divider {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.pix-divider::before,
+.pix-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.pix-confirm-btn {
+  width: 100%;
+  height: 50px;
+  background: #32BCAD;
+  color: white;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.pix-confirm-btn:hover { background: #279e90; }
+.pix-confirm-btn:active { transform: scale(0.97); }
+.pix-confirm-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Card Form Section ──────────────────────────────────── */
+.card-form {
+  padding: 14px 16px 16px;
+}
+
+.card-preview {
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transition: background 0.4s;
+}
+
+.card-preview-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-chip {
+  font-size: 22px;
+  color: rgba(255,255,255,0.9);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+.card-brand-logo { display: flex; align-items: center; }
+.card-no-brand { font-size: 24px; }
+
+.card-preview-number {
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 3px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  font-family: 'Courier New', monospace;
+  margin: 10px 0;
+}
+
+.card-preview-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-preview-label {
+  display: block;
+  font-size: 9px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.card-preview-value {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-type-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.card-brand-detected {
+  color: var(--croco-light);
+  font-weight: 700;
+}
+
+.card-number-input { padding-right: 70px; }
+
+.card-brand-inline {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.card-input-row {
+  display: flex;
+  gap: 0;
+}
+
+.card-row-two {
+  display: flex;
+  gap: 12px;
+}

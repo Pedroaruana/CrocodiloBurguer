@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { CartProvider } from './context/CartContext'
+import { AuthProvider } from './context/AuthContext'
+import AuthModal from './components/AuthModal'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
 import CategoryNav from './components/CategoryNav'
@@ -10,6 +12,8 @@ import CartDrawer from './components/CartDrawer'
 import PromoBanner from './components/PromoBanner'
 import FlyingItems from './components/FlyingItem'
 import CheckoutPage from './components/CheckoutPage'
+import LegalBanner from './components/LegalBanner'
+import OrdersPage from './components/OrdersPage'
 import { categories, products, restaurant } from './data/menu'
 import './App.css'
 
@@ -18,6 +22,8 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [activeCategory, setActiveCategory]   = useState('destaques')
   const [showCheckout, setShowCheckout]       = useState(false)
+  const [showAuth, setShowAuth]               = useState(false)
+  const [showOrders, setShowOrders]           = useState(false)
   const sectionRefs  = useRef({})
   const isScrolling  = useRef(false)
 
@@ -57,9 +63,14 @@ export default function App() {
   const isSearching = search.trim().length > 0
 
   return (
+    <AuthProvider>
     <CartProvider>
       <div className="app">
-        <Header restaurant={restaurant} />
+        <Header
+          restaurant={restaurant}
+          onLoginClick={() => setShowAuth(true)}
+          onOrdersClick={() => setShowOrders(true)}
+        />
 
         <div className="sticky-top">
           <SearchBar value={search} onChange={setSearch} />
@@ -74,6 +85,7 @@ export default function App() {
 
         <main className="main-content">
           {!isSearching && <PromoBanner />}
+          {!isSearching && <LegalBanner />}
 
           {isSearching ? (
             <div className="search-results-section">
@@ -135,7 +147,16 @@ export default function App() {
         {showCheckout && (
           <CheckoutPage onClose={() => setShowCheckout(false)} />
         )}
+
+        {showAuth && (
+          <AuthModal onClose={() => setShowAuth(false)} />
+        )}
+
+        {showOrders && (
+          <OrdersPage onClose={() => setShowOrders(false)} />
+        )}
       </div>
     </CartProvider>
+    </AuthProvider>
   )
 }
