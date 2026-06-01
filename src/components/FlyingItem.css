@@ -1,0 +1,25 @@
+.fly-item {
+  position: fixed;
+  font-size: 30px;
+  z-index: 9999;
+  pointer-events: none;
+  transform-origin: center;
+  animation: fly-to-cart 0.65s cubic-bezier(0.55, 0, 0.45, 1) forwards;
+  line-height: 1;
+  user-select: none;
+}
+
+@keyframes fly-to-cart {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+    transform: translate(calc(var(--tx) * 0.3), calc(var(--ty) * 0.3 - 60px)) scale(1.2);
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0.15);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,63 @@
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+  box-shadow: 0 0 60px rgba(0,0,0,0.12);
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+}
+
+.main-content {
+  padding-bottom: 100px;
+}
+
+.category-section {
+  background: white;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  padding: 18px 16px 10px;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-results-section {
+  background: white;
+  min-height: 200px;
+}
+
+.empty-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 24px;
+  gap: 12px;
+  color: var(--text-secondary);
+}
+
+.empty-search span {
+  font-size: 56px;
+}
+
+.empty-search p {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.empty-search small {
+  font-size: 13px;
+  color: var(--text-muted);
+}
