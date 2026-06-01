@@ -27,6 +27,15 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, desenvolvid
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+  <img src="screenshots/cardapio.png" width="30%" alt="Cardápio" />
+  <img src="screenshots/carrinho.png" width="30%" alt="Modal do produto" />
+  <img src="screenshots/checkout.png" width="30%" alt="Checkout" />
+</div>
+
+
 ## 🚀 Como rodar
 
 ### Pré-requisitos
@@ -66,6 +75,16 @@ Abra o IP que aparecer no terminal no navegador do celular.
 - **CSS puro** — Custom properties, animações, mobile-first
 - **LocalStorage** — Persistência do carrinho sem backend
 
+
+---
+
+## 📸 Screenshots
+
+<div align="center">
+  <img src="screenshots/cardapio.png" width="30%" alt="Cardápio" />
+  <img src="screenshots/produto.png" width="30%" alt="Modal do produto" />
+  <img src="screenshots/checkout.png" width="30%" alt="Checkout" />
+</div>
 
 ---
 
