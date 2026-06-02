@@ -16,6 +16,8 @@
 
 Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, desenvolvido com foco em UI/UX mobile. A aplicação simula a experiência de um app de delivery real — com login, carrinho, checkout, pagamento via PIX e cartão, acompanhamento de pedidos em tempo real e muito mais. Tudo isso sem banco de dados, 100% front-end.
 
+> **⚙️ Decisão técnica intencional:** toda a persistência de dados (carrinho, sessão de login, histórico de pedidos) é feita via `localStorage`. Essa escolha foi proposital para manter o projeto 100% front-end, sem necessidade de backend ou infraestrutura externa — ideal para demonstrar domínio de React, Context API e UX sem dependências extras.
+
 ---
 
 ## 📸 Screenshots
