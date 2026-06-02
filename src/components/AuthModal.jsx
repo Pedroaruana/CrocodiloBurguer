@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import './AuthModal.css'
 
 export default function AuthModal({ initialTab = 'login', onClose }) {
   const { login, register } = useAuth()
-  const [tab, setTab]         = useState(initialTab)
+  const [tab, setTab]           = useState(initialTab)
   const [showPass, setShowPass] = useState(false)
-  const [error, setError]     = useState('')
-  const [form, setForm]       = useState({ name: '', email: '', password: '' })
+  const [error, setError]       = useState('')
+  const [loading, setLoading]   = useState(false)
+  const [form, setForm]         = useState({ name: '', email: '', password: '' })
+  const mountedRef              = useRef(true)
+
+  useEffect(() => { return () => { mountedRef.current = false } }, [])
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -25,25 +29,31 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
     setForm({ name: '', email: '', password: '' })
   }
 
+  // Regex RFC-5322 simplificado — rejeita a@, @b, espaços
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
   function validate() {
     if (tab === 'register' && !form.name.trim())
       return 'Informe seu nome.'
-    if (!form.email.includes('@'))
+    if (!EMAIL_RE.test(form.email))
       return 'E-mail inválido.'
     if (form.password.length < 6)
       return 'Senha deve ter ao menos 6 caracteres.'
     return null
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const err = validate()
     if (err) return setError(err)
 
+    setLoading(true)
     const result = tab === 'login'
-      ? login({ email: form.email, password: form.password })
-      : register({ name: form.name, email: form.email, password: form.password })
+      ? await login({ email: form.email, password: form.password })
+      : await register({ name: form.name, email: form.email, password: form.password })
 
+    if (!mountedRef.current) return
+    setLoading(false)
     if (result.error) return setError(result.error)
     onClose()
   }
@@ -125,8 +135,8 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
 
           {error && <div className="auth-error">⚠️ {error}</div>}
 
-          <button type="submit" className="auth-submit">
-            {tab === 'login' ? '🔓 Entrar' : '🚀 Criar conta'}
+          <button type="submit" className="auth-submit" disabled={loading}>
+            {loading ? '⏳ Aguarde...' : tab === 'login' ? '🔓 Entrar' : '🚀 Criar conta'}
           </button>
 
           <p className="auth-switch">

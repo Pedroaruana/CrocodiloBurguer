@@ -58,11 +58,14 @@ export default function OrdersPage({ onClose }) {
     if (currentUser) setOrders(getOrders(currentUser.email))
   }, [currentUser])
 
-  // Atualiza status automaticamente a cada 30s
+  // Atualiza status E recarrega pedidos a cada 30s
   useEffect(() => {
-    const id = setInterval(() => setTick(t => t + 1), 30000)
+    const id = setInterval(() => {
+      setTick(t => t + 1)
+      if (currentUser) setOrders(getOrders(currentUser.email))
+    }, 30000)
     return () => clearInterval(id)
-  }, [])
+  }, [currentUser])
 
   return (
     <div className="orders-overlay">

@@ -9,6 +9,28 @@ import './CheckoutPage.css'
 
 const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
+// Algoritmo de Luhn — valida número de cartão
+function luhn(num) {
+  const n = num.replace(/\D/g, '')
+  let sum = 0, alt = false
+  for (let i = n.length - 1; i >= 0; i--) {
+    let d = parseInt(n[i])
+    if (alt) { d *= 2; if (d > 9) d -= 9 }
+    sum += d; alt = !alt
+  }
+  return n.length >= 13 && sum % 10 === 0
+}
+
+// Valida MM/AA e rejeita datas passadas
+function isValidExpiry(expiry) {
+  const [mm, yy] = expiry.split('/')
+  if (!mm || !yy || yy.length < 2) return false
+  const month = parseInt(mm), year = parseInt('20' + yy)
+  if (month < 1 || month > 12) return false
+  const now = new Date()
+  return new Date(year, month - 1, 1) >= new Date(now.getFullYear(), now.getMonth(), 1)
+}
+
 const PAYMENTS = [
   { id: 'pix',     label: 'PIX',        emoji: '⚡' },
   { id: 'credit',  label: 'Crédito',    emoji: '💳' },
@@ -39,16 +61,18 @@ export default function CheckoutPage({ onClose }) {
       alert('Preencha seu nome, telefone, rua e número.')
       return
     }
-    if ((payment === 'credit' || payment === 'debit') && (
-      !cardData.number || cardData.number.length < 13 ||
-      !cardData.name   || !cardData.expiry || cardData.expiry.length < 5 ||
-      !cardData.cvv    || cardData.cvv.length < 3
-    )) {
-      alert('Preencha todos os dados do cartão corretamente.')
-      return
+    if (payment === 'credit' || payment === 'debit') {
+      if (!cardData.number || !luhn(cardData.number))
+        return alert('Número de cartão inválido.')
+      if (!cardData.name?.trim())
+        return alert('Informe o nome do titular.')
+      if (!cardData.expiry || !isValidExpiry(cardData.expiry))
+        return alert('Data de validade inválida ou expirada.')
+      if (!cardData.cvv || cardData.cvv.length < 3)
+        return alert('CVV inválido.')
     }
     const order = {
-      id: Math.floor(Math.random() * 90000 + 10000).toString(),
+      id: crypto.randomUUID(),
       userEmail: currentUser?.email ?? 'guest',
       items: state.items,
       total,
