@@ -5,23 +5,32 @@ const CartContext = createContext(null)
 function cartReducer(state, action) {
   switch (action.type) {
     case 'ADD': {
-      const idx = state.items.findIndex(i => i.product.id === action.product.id)
+      const idx = state.items.findIndex(i => i.cartId === action.cartId)
       if (idx >= 0) {
         const items = [...state.items]
         items[idx] = { ...items[idx], quantity: items[idx].quantity + 1 }
         return { ...state, items }
       }
-      return { ...state, items: [...state.items, { product: action.product, quantity: 1 }] }
+      return {
+        ...state,
+        items: [...state.items, {
+          product:     action.product,
+          extras:      action.extras || [],
+          observation: action.observation || '',
+          cartId:      action.cartId,
+          quantity:    1,
+        }],
+      }
     }
     case 'REMOVE':
-      return { ...state, items: state.items.filter(i => i.product.id !== action.productId) }
+      return { ...state, items: state.items.filter(i => i.cartId !== action.cartId) }
     case 'UPDATE_QTY': {
       if (action.quantity <= 0)
-        return { ...state, items: state.items.filter(i => i.product.id !== action.productId) }
+        return { ...state, items: state.items.filter(i => i.cartId !== action.cartId) }
       return {
         ...state,
         items: state.items.map(i =>
-          i.product.id === action.productId ? { ...i, quantity: action.quantity } : i
+          i.cartId === action.cartId ? { ...i, quantity: action.quantity } : i
         ),
       }
     }
@@ -54,7 +63,10 @@ export function CartProvider({ children }) {
   }, [state.items])
 
   const totalItems = state.items.reduce((s, i) => s + i.quantity, 0)
-  const subtotal   = state.items.reduce((s, i) => s + i.product.price * i.quantity, 0)
+  const subtotal   = state.items.reduce((s, i) => {
+    const extrasPrice = (i.extras || []).reduce((e, x) => e + x.price, 0)
+    return s + (i.product.price + extrasPrice) * i.quantity
+  }, 0)
 
   return (
     <CartContext.Provider value={{ state, dispatch, totalItems, subtotal }}>

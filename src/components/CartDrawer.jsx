@@ -18,7 +18,7 @@ export default function CartDrawer({ onCheckout }) {
   if (!isOpen) return null
 
   function close() { dispatch({ type: 'CLOSE_CART' }) }
-  function updateQty(id, qty) { dispatch({ type: 'UPDATE_QTY', productId: id, quantity: qty }) }
+  function updateQty(cartId, qty) { dispatch({ type: 'UPDATE_QTY', cartId, quantity: qty }) }
   function clear() { dispatch({ type: 'CLEAR' }); close() }
 
   function handleCheckout() {
@@ -44,33 +44,44 @@ export default function CartDrawer({ onCheckout }) {
               <small>Adicione itens do cardápio</small>
             </div>
           ) : (
-            items.map(({ product, quantity }) => (
-              <div className="cart-item" key={product.id}>
-                <div
-                  className="cart-item-thumb"
-                  style={{ background: product.gradient }}
-                >
-                  {product.emoji}
+            items.map(({ product, quantity, extras, observation, cartId }) => {
+              const extrasPrice = (extras || []).reduce((s, e) => s + e.price, 0)
+              return (
+                <div className="cart-item" key={cartId}>
+                  <div
+                    className="cart-item-thumb"
+                    style={{ background: product.gradient }}
+                  >
+                    {product.emoji}
+                  </div>
+                  <div className="cart-item-info">
+                    <p className="cart-item-name">{product.name}</p>
+                    {extras?.length > 0 && (
+                      <p className="cart-item-extras">
+                        + {extras.map(e => e.label).join(', ')}
+                      </p>
+                    )}
+                    {observation && (
+                      <p className="cart-item-obs">📝 {observation}</p>
+                    )}
+                    <p className="cart-item-price">{fmt((product.price + extrasPrice) * quantity)}</p>
+                  </div>
+                  <div className="cart-item-qty">
+                    <button
+                      className="cart-qty-btn"
+                      onClick={() => updateQty(cartId, quantity - 1)}
+                      aria-label="Diminuir"
+                    >−</button>
+                    <span className="cart-qty-val">{quantity}</span>
+                    <button
+                      className="cart-qty-btn"
+                      onClick={() => updateQty(cartId, quantity + 1)}
+                      aria-label="Aumentar"
+                    >+</button>
+                  </div>
                 </div>
-                <div className="cart-item-info">
-                  <p className="cart-item-name">{product.name}</p>
-                  <p className="cart-item-price">{fmt(product.price * quantity)}</p>
-                </div>
-                <div className="cart-item-qty">
-                  <button
-                    className="cart-qty-btn"
-                    onClick={() => updateQty(product.id, quantity - 1)}
-                    aria-label="Diminuir"
-                  >−</button>
-                  <span className="cart-qty-val">{quantity}</span>
-                  <button
-                    className="cart-qty-btn"
-                    onClick={() => updateQty(product.id, quantity + 1)}
-                    aria-label="Aumentar"
-                  >+</button>
-                </div>
-              </div>
-            ))
+              )
+            })
           )}
         </div>
 

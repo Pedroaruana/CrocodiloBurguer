@@ -178,6 +178,21 @@
   font-weight: 600;
 }
 
+.cart-item-extras {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.cart-item-obs {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
 .cart-item-qty {
   display: flex;
   align-items: center;
