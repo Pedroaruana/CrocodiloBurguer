@@ -9,6 +9,7 @@
 ![CSS3](https://img.shields.io/badge/CSS3-Variables-1572b6?style=flat-square&logo=css3)
 ![Status](https://img.shields.io/badge/status-online-2d6a4f?style=flat-square)
 ![Vercel](https://img.shields.io/badge/deploy-Vercel-black?style=flat-square&logo=vercel)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 ---
 
