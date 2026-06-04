@@ -91,6 +91,24 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, desenvolvid
 
 ---
 
+## 🧪 Como testar o checkout
+
+O pagamento por cartão usa o **algoritmo de Luhn** (mesma validação dos bancos reais), portanto números aleatórios são rejeitados.
+
+> ⚠️ **Não use seu cartão real!** Use os números de teste públicos abaixo — são números oficiais usados pela indústria para testes e não processam nenhuma cobrança.
+
+| Bandeira | Número | CVV | Validade |
+|---|---|---|---|
+| 💳 Visa | `4111 1111 1111 1111` | qualquer 3 dígitos | qualquer data futura |
+| 💳 Mastercard | `5555 5555 5555 4444` | qualquer 3 dígitos | qualquer data futura |
+| 💳 Amex | `3782 822463 10005` | qualquer 4 dígitos | qualquer data futura |
+| 💳 Elo | `6362 9700 0045 7013` | qualquer 3 dígitos | qualquer data futura |
+| 💳 Hipercard | `6062 8244 6453 6010` | qualquer 3 dígitos | qualquer data futura |
+
+Para PIX, basta clicar em **"Já paguei!"** após gerar o QR Code.
+
+---
+
 ## 🚀 Como rodar
 
 ### Pré-requisitos
