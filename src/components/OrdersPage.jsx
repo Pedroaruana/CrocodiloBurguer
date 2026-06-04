@@ -128,7 +128,11 @@ export default function OrdersPage({ onClose }) {
                     {order.items.map(({ product, quantity }) => (
                       <div key={product.id} className="order-item-row">
                         <div className="order-item-thumb" style={{ background: product.gradient }}>
-                          {product.emoji}
+                          <span className="thumb-emoji">{product.emoji}</span>
+                          {product.image && (
+                            <img src={product.image} alt="" className="thumb-img" loading="lazy"
+                                 onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                          )}
                         </div>
                         <span className="order-item-name">{product.name}</span>
                         <span className="order-item-qty">×{quantity}</span>

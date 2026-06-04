@@ -65,7 +65,16 @@ export default function ProductCard({ product, onClick }) {
         style={{ background: product.gradient }}
         aria-hidden="true"
       >
-        <span>{product.emoji}</span>
+        <span className="product-thumb-emoji">{product.emoji}</span>
+        {product.image && (
+          <img
+            src={product.image}
+            alt=""
+            className="product-thumb-img"
+            loading="lazy"
+            onError={(e) => { e.currentTarget.style.display = 'none' }}
+          />
+        )}
         {qty > 0 && <span className="product-thumbnail-qty">{qty}</span>}
       </div>
     </div>

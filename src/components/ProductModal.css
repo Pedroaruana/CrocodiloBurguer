@@ -39,6 +39,25 @@
   font-size: 90px;
   position: relative;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.modal-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.modal-hero-emoji {
+  position: relative;
+  z-index: 0;
+}
+
+.modal-close {
+  z-index: 2;
 }
 
 .modal-close {

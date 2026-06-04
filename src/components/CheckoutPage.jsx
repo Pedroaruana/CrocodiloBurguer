@@ -134,7 +134,11 @@ export default function CheckoutPage({ onClose }) {
             {state.items.map(({ product, quantity }) => (
               <div className="checkout-order-item" key={product.id}>
                 <div className="checkout-item-thumb" style={{ background: product.gradient }}>
-                  {product.emoji}
+                  <span className="thumb-emoji">{product.emoji}</span>
+                  {product.image && (
+                    <img src={product.image} alt="" className="thumb-img" loading="lazy"
+                         onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                  )}
                 </div>
                 <span className="checkout-item-name">{product.name}</span>
                 <span className="checkout-item-qty">×{quantity}</span>

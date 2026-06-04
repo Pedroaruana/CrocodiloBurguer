@@ -60,7 +60,15 @@ export default function ProductModal({ product, onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-sheet" onClick={e => e.stopPropagation()}>
         <div className="modal-hero" style={{ background: product.gradient }}>
-          <span>{product.emoji}</span>
+          <span className="modal-hero-emoji">{product.emoji}</span>
+          {product.image && (
+            <img
+              src={product.image}
+              alt={product.name}
+              className="modal-hero-img"
+              onError={(e) => { e.currentTarget.style.display = 'none' }}
+            />
+          )}
           <button className="modal-close" onClick={onClose} aria-label="Fechar">✕</button>
         </div>
 

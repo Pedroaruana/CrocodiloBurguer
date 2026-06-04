@@ -52,7 +52,16 @@ export default function CartDrawer({ onCheckout }) {
                     className="cart-item-thumb"
                     style={{ background: product.gradient }}
                   >
-                    {product.emoji}
+                    <span className="cart-item-thumb-emoji">{product.emoji}</span>
+                    {product.image && (
+                      <img
+                        src={product.image}
+                        alt=""
+                        className="cart-item-thumb-img"
+                        loading="lazy"
+                        onError={(e) => { e.currentTarget.style.display = 'none' }}
+                      />
+                    )}
                   </div>
                   <div className="cart-item-info">
                     <p className="cart-item-name">{product.name}</p>
