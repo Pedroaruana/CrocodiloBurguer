@@ -20,8 +20,10 @@ export default function ProductCard({ product, onClick }) {
   const { dispatch, state } = useCart()
   const [flash, setFlash] = useState(false)
 
-  const cartItem = state.items.find(i => i.product.id === product.id)
-  const qty = cartItem?.quantity ?? 0
+  // Soma todas as quantidades do produto (pode ter várias entradas com extras diferentes)
+  const qty = state.items
+    .filter(i => i.product.id === product.id)
+    .reduce((s, i) => s + i.quantity, 0)
 
   function handleAdd(e) {
     e.stopPropagation()
@@ -29,7 +31,8 @@ export default function ProductCard({ product, onClick }) {
     window.dispatchEvent(new CustomEvent('cart-fly', {
       detail: { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, emoji: product.emoji },
     }))
-    dispatch({ type: 'ADD', product })
+    // cartId fixo = product.id (sem extras) para o botão rápido do card
+    dispatch({ type: 'ADD', product, cartId: String(product.id) })
     setFlash(true)
     setTimeout(() => setFlash(false), 300)
   }

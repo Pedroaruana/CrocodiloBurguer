@@ -45,13 +45,24 @@ function cartReducer(state, action) {
   }
 }
 
-const STORAGE_KEY = 'crocodilo-cart-v1'
+const STORAGE_KEY     = 'crocodilo-cart-v2'   // v2 = suporte a cartId + extras
+const STORAGE_KEY_OLD = 'crocodilo-cart-v1'
 
 function loadSaved() {
   try {
+    // Limpa formato antigo incompatível (sem cartId)
+    localStorage.removeItem(STORAGE_KEY_OLD)
+
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) return { ...JSON.parse(raw), isOpen: false }
-  } catch {}
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      // Migração defensiva: garante que todo item tem cartId válido
+      const items = (parsed.items || []).filter(i => i.cartId && i.product)
+      return { items, isOpen: false }
+    }
+  } catch {
+    localStorage.removeItem(STORAGE_KEY)
+  }
   return { items: [], isOpen: false }
 }
 
