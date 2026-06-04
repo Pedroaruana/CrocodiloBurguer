@@ -17,6 +17,8 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em
 
 > **Decisão técnica:** persistência feita via `localStorage` (carrinho, sessão e pedidos). Foi intencional para o projeto ficar 100% front-end e deployável em qualquer host estático. Em produção real, isso viraria uma API.
 
+> **Nota sobre o histórico:** comecei o projeto, fiquei insatisfeito com a estrutura inicial e acabei apagando tudo pra recomeçar do zero. Por isso o primeiro commit traz a base já formada — os commits seguintes refletem a evolução real do projeto.
+
 ---
 
 ## Screenshots
