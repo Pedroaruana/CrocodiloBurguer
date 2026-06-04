@@ -43,6 +43,7 @@ export const products = [
   },
   {
     id: 30, category: 'exoticos', name: 'Pato Real',
+    image: IMG('photo-1561429743-6ed153ad7071'),
     description: 'Blend artesanal 180g de peito de pato confitado, queijo camembert, geleia de laranja, rúcula selvagem, cebola caramelizada no vinho tinto e brioche artesanal',
     price: 58.90, badge: '🦆 Chef\'s Pick', badgeColor: '#7b4f00',
     rating: 4.8, reviewCount: 89,
@@ -50,6 +51,7 @@ export const products = [
   },
   {
     id: 31, category: 'exoticos', name: 'Pirarucu da Amazônia',
+    image: IMG('photo-1617199045294-8053ccfa6f61'),
     description: 'Hambúrguer de pirarucu 160g defumado na lenha, queijo coalho grelhado, vinagrete de manga, pimenta-de-cheiro, coentro fresco e pão de tapioca artesanal',
     price: 56.90, badge: '🐟 Amazônia', badgeColor: '#1565c0',
     rating: 4.7, reviewCount: 76,
@@ -60,7 +62,7 @@ export const products = [
   { id: 4,  category: 'burgers',   name: 'Croco Classic',     image: IMG('photo-1571091718767-18b5b1457add'), rating: 4.6, reviewCount: 1203, description: 'Blend angus 180g, queijo cheddar, alface americana, tomate, cebola roxa e molho especial da casa', price: 32.90, gradient: 'linear-gradient(145deg, #2d6a4f 0%, #95d5b2 100%)', emoji: '🍔' },
   { id: 5,  category: 'burgers',   name: 'Croco Smash',       image: IMG('photo-1568901346375-23c9450c58cd'), rating: 4.9, reviewCount: 847,  description: 'Dois smash burgers 120g, queijo americano duplo, cebola caramelizada, picles crocante e molho secreto da jaula', price: 42.90, badge: '🔥 Mais pedido', badgeColor: '#e63946', gradient: 'linear-gradient(145deg, #1a472a 0%, #f4a261 100%)', emoji: '🍔' },
   { id: 6,  category: 'burgers',   name: 'Jacarezão',         image: IMG('photo-1572802419224-296b0aeee0d9'), rating: 4.7, reviewCount: 312,  description: 'Blend artesanal 220g, bacon crocante, queijo gouda, rúcula, geleia de pimenta e maionese trufada', price: 49.90, badge: '🌶️ Picante', badgeColor: '#e63946', gradient: 'linear-gradient(145deg, #5c1a1a 0%, #f9c74f 100%)', emoji: '🍔' },
-  { id: 7,  category: 'burgers',   name: 'Croco Veggie', rating: 4.5, reviewCount: 189,  description: 'Blend de grão-de-bico e beterraba, queijo brie, espinafre, tomate seco e molho de ervas frescas', price: 36.90, badge: '🌿 Veggie', badgeColor: '#40916c', gradient: 'linear-gradient(145deg, #40916c 0%, #d8f3dc 100%)', emoji: '🥗' },
+  { id: 7,  category: 'burgers',   name: 'Croco Veggie',      image: IMG('photo-1465799411029-5a317ff17837'), rating: 4.5, reviewCount: 189,  description: 'Blend de grão-de-bico e beterraba, queijo brie, espinafre, tomate seco e molho de ervas frescas', price: 36.90, badge: '🌿 Veggie', badgeColor: '#40916c', gradient: 'linear-gradient(145deg, #40916c 0%, #d8f3dc 100%)', emoji: '🥗' },
   { id: 8,  category: 'burgers',   name: 'Croco Duplo',       image: IMG('photo-1586190848861-99aa4a171e90'), rating: 4.6, reviewCount: 443,  description: 'Dois blends angus 150g, queijo cheddar duplo, bacon, picles, cebola caramelizada, mostarda e ketchup artesanal', price: 47.90, gradient: 'linear-gradient(145deg, #2d6a4f 0%, #f4a261 100%)', emoji: '🍔' },
   { id: 9,  category: 'burgers',   name: 'Filhote da Lagoa',  image: IMG('photo-1550317138-10000687a72b'),    rating: 4.8, reviewCount: 267,  description: 'Blend 150g, queijo prato, ovo caipira frito, bacon canadense, alface crespa e maionese defumada', price: 39.90, gradient: 'linear-gradient(145deg, #1a472a 0%, #f9c74f 100%)', emoji: '🍳' },
   { id: 10, category: 'burgers',   name: 'BBQ da Selva',      image: IMG('photo-1551782450-a2132b4ba21d'),    rating: 4.7, reviewCount: 198,  description: 'Blend angus 200g, queijo emmental, cebola crispy, molho BBQ defumado e pimenta calabresa', price: 44.90, gradient: 'linear-gradient(145deg, #3b1a0a 0%, #f4a261 100%)', emoji: '🍖' },
@@ -76,7 +78,7 @@ export const products = [
   { id: 16, category: 'bebidas',   name: 'Refrigerante 350ml',      image: IMG('photo-1581636625402-29b2a704ef13'), rating: 4.3, reviewCount: 892, description: 'Coca-Cola, Coca Zero, Sprite, Guaraná Antarctica ou Fanta Laranja', price: 7.90, gradient: 'linear-gradient(145deg, #c1121f 0%, #f9c74f 100%)', emoji: '🥤' },
   { id: 17, category: 'bebidas',   name: 'Milk Shake Artesanal',    image: IMG('photo-1572490122747-3968b75cc699'), rating: 4.9, reviewCount: 634, description: 'Chocolate belga, morango, baunilha ou ovomaltine — 400ml cremoso e gelado', price: 22.90, badge: '❤️ Favorito', badgeColor: '#e63946', gradient: 'linear-gradient(145deg, #5c1a1a 0%, #f4a261 100%)', emoji: '🥛' },
   { id: 18, category: 'bebidas',   name: 'Suco Natural 400ml',      image: IMG('photo-1546171753-97d7676e4602'),    rating: 4.7, reviewCount: 289, description: 'Laranja, limão, maracujá, abacaxi com hortelã ou morango com acerola', price: 14.90, gradient: 'linear-gradient(145deg, #40916c 0%, #f9c74f 100%)', emoji: '🍊' },
-  { id: 19, category: 'bebidas',   name: 'Água Mineral 500ml',      rating: 4.1, reviewCount: 156, description: 'Com ou sem gás, gelada', price: 5.90, gradient: 'linear-gradient(145deg, #48cae4 0%, #90e0ef 100%)', emoji: '💧' },
+  { id: 19, category: 'bebidas',   name: 'Água Mineral 500ml',      image: IMG('photo-1675914861279-921639cd47e1'), rating: 4.1, reviewCount: 156, description: 'Com ou sem gás, gelada', price: 5.90, gradient: 'linear-gradient(145deg, #48cae4 0%, #90e0ef 100%)', emoji: '💧' },
   { id: 20, category: 'bebidas',   name: 'Cerveja Artesanal 355ml', image: IMG('photo-1535958636474-b021ee887b13'), rating: 4.8, reviewCount: 421, description: 'IPA, Weiss, Pilsen ou Red Ale — rótulos selecionados pelo chef', price: 18.90, gradient: 'linear-gradient(145deg, #7b4f00 0%, #f9c74f 100%)', emoji: '🍺' },
 
   // ── SOBREMESAS ─────────────────────────────────────────────────────────────
@@ -89,5 +91,5 @@ export const products = [
   { id: 25, category: 'extras', name: 'Batata Crinkle G', image: IMG('photo-1576107232684-1279f390859f'), rating: 4.7, reviewCount: 489, description: 'Batata crinkle crocante temperada com ervas — porção grande (~380g)', price: 22.90, gradient: 'linear-gradient(145deg, #7b4f00 0%, #f9c74f 100%)', emoji: '🍟' },
   { id: 26, category: 'extras', name: 'Queijo Extra',     image: IMG('photo-1486297678162-eb2a19b0a32d'), rating: 4.5, reviewCount: 203, description: 'Fatia extra de queijo cheddar, gouda ou americano', price: 3.90, gradient: 'linear-gradient(145deg, #d4a017 0%, #f9c74f 100%)', emoji: '🧀' },
   { id: 27, category: 'extras', name: 'Bacon Crocante',   image: IMG('photo-1528607929212-2636ec44253e'), rating: 4.8, reviewCount: 341, description: 'Tiras de bacon canadense extra crocante', price: 5.90, gradient: 'linear-gradient(145deg, #8b0000 0%, #f4a261 100%)', emoji: '🥓' },
-  { id: 28, category: 'extras', name: 'Molho Especial',   rating: 4.7, reviewCount: 178, description: 'Maionese trufada, molho da casa, BBQ defumado ou aioli de alho negro', price: 4.90, gradient: 'linear-gradient(145deg, #2d6a4f 0%, #f9c74f 100%)', emoji: '🫙' },
+  { id: 28, category: 'extras', name: 'Molho Especial',   image: IMG('photo-1638697586690-37f66f05083a'), rating: 4.7, reviewCount: 178, description: 'Maionese trufada, molho da casa, BBQ defumado ou aioli de alho negro', price: 4.90, gradient: 'linear-gradient(145deg, #2d6a4f 0%, #f9c74f 100%)', emoji: '🫙' },
 ]
