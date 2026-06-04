@@ -2,19 +2,21 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import './OrdersPage.css'
 
-const fmt     = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const ORDERS_KEY = 'croco-orders-v1'
+const REFRESH_MS = 30_000
+
+const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 const STEPS = [
   { key: 'confirmado', label: 'Confirmado', emoji: '✅' },
   { key: 'preparando', label: 'Preparando', emoji: '👨‍🍳' },
-  { key: 'a_caminho',  label: 'A caminho',  emoji: '🛵' },
-  { key: 'entregue',   label: 'Entregue',   emoji: '🏠' },
+  { key: 'a_caminho', label: 'A caminho', emoji: '🛵' },
+  { key: 'entregue', label: 'Entregue', emoji: '🏠' },
 ]
 
 function getStatus(createdAt) {
   const mins = (Date.now() - createdAt) / 60000
-  if (mins < 3)  return STEPS[0]
+  if (mins < 3) return STEPS[0]
   if (mins < 15) return STEPS[1]
   if (mins < 40) return STEPS[2]
   return STEPS[3]
@@ -24,14 +26,17 @@ function getEta(createdAt, statusKey) {
   const mins = (Date.now() - createdAt) / 60000
   if (statusKey === 'confirmado') return `Previsão: ~${Math.max(37, Math.round(40 - mins))} min`
   if (statusKey === 'preparando') return `Previsão: ~${Math.max(25, Math.round(40 - mins))} min`
-  if (statusKey === 'a_caminho')  return `Chegando em ~${Math.max(5, Math.round(40 - mins))} min`
+  if (statusKey === 'a_caminho') return `Chegando em ~${Math.max(5, Math.round(40 - mins))} min`
   return 'Pedido entregue!'
 }
 
 function formatDate(ts) {
   return new Date(ts).toLocaleString('pt-BR', {
-    day: '2-digit', month: '2-digit', year: 'numeric',
-    hour: '2-digit', minute: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   })
 }
 
@@ -39,31 +44,35 @@ export function saveOrder(order) {
   try {
     const existing = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]')
     localStorage.setItem(ORDERS_KEY, JSON.stringify([order, ...existing]))
-  } catch {}
+  } catch {
+    // localStorage might be unavailable (private mode / quota); fail silently
+  }
 }
 
 export function getOrders(userEmail) {
   try {
     const all = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]')
-    return all.filter(o => o.userEmail === userEmail)
-  } catch { return [] }
+    return all.filter((o) => o.userEmail === userEmail)
+  } catch {
+    return []
+  }
 }
 
 export default function OrdersPage({ onClose }) {
   const { currentUser } = useAuth()
   const [orders, setOrders] = useState([])
-  const [, setTick] = useState(0)
+  const [, forceTick] = useState(0)
 
   useEffect(() => {
-    if (currentUser) setOrders(getOrders(currentUser.email))
-  }, [currentUser])
+    if (!currentUser) return
 
-  // Atualiza status E recarrega pedidos a cada 30s
-  useEffect(() => {
+    setOrders(getOrders(currentUser.email))
+
     const id = setInterval(() => {
-      setTick(t => t + 1)
-      if (currentUser) setOrders(getOrders(currentUser.email))
-    }, 30000)
+      setOrders(getOrders(currentUser.email))
+      forceTick((t) => t + 1)
+    }, REFRESH_MS)
+
     return () => clearInterval(id)
   }, [currentUser])
 

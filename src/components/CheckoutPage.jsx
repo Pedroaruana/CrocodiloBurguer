@@ -9,51 +9,64 @@ import './CheckoutPage.css'
 
 const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
-// Algoritmo de Luhn — valida número de cartão
 function luhn(num) {
   const n = num.replace(/\D/g, '')
-  let sum = 0, alt = false
+  if (n.length < 13) return false
+
+  let sum = 0
+  let double = false
   for (let i = n.length - 1; i >= 0; i--) {
-    let d = parseInt(n[i])
-    if (alt) { d *= 2; if (d > 9) d -= 9 }
-    sum += d; alt = !alt
+    let digit = parseInt(n[i], 10)
+    if (double) {
+      digit *= 2
+      if (digit > 9) digit -= 9
+    }
+    sum += digit
+    double = !double
   }
-  return n.length >= 13 && sum % 10 === 0
+  return sum % 10 === 0
 }
 
-// Valida MM/AA e rejeita datas passadas
 function isValidExpiry(expiry) {
   const [mm, yy] = expiry.split('/')
   if (!mm || !yy || yy.length < 2) return false
-  const month = parseInt(mm), year = parseInt('20' + yy)
+
+  const month = parseInt(mm, 10)
+  const year = parseInt('20' + yy, 10)
   if (month < 1 || month > 12) return false
+
   const now = new Date()
   return new Date(year, month - 1, 1) >= new Date(now.getFullYear(), now.getMonth(), 1)
 }
 
 const PAYMENTS = [
-  { id: 'pix',     label: 'PIX',        emoji: '⚡' },
-  { id: 'credit',  label: 'Crédito',    emoji: '💳' },
-  { id: 'debit',   label: 'Débito',     emoji: '🏧' },
-  { id: 'cash',    label: 'Dinheiro',   emoji: '💵' },
+  { id: 'pix', label: 'PIX', emoji: '⚡' },
+  { id: 'credit', label: 'Crédito', emoji: '💳' },
+  { id: 'debit', label: 'Débito', emoji: '🏧' },
+  { id: 'cash', label: 'Dinheiro', emoji: '💵' },
 ]
 
 export default function CheckoutPage({ onClose }) {
   const { state, dispatch, subtotal } = useCart()
   const { currentUser } = useAuth()
   const [payment, setPayment] = useState('pix')
-  const [troco, setTroco]     = useState('')
+  const [troco, setTroco] = useState('')
   const [cardData, setCardData] = useState({})
   const [success, setSuccess] = useState(false)
   const [form, setForm] = useState({
-    name: '', phone: '', cep: '',
-    street: '', number: '', neighborhood: '', complement: '',
+    name: '',
+    phone: '',
+    cep: '',
+    street: '',
+    number: '',
+    neighborhood: '',
+    complement: '',
   })
 
   const total = subtotal + restaurant.deliveryFee
 
   function set(field, value) {
-    setForm(f => ({ ...f, [field]: value }))
+    setForm((f) => ({ ...f, [field]: value }))
   }
 
   function handleConfirm() {

@@ -1,34 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './FlyingItem.css'
 
 export default function FlyingItems() {
-  const [flies, setFlies] = useState([])
+  const [items, setItems] = useState([])
 
   useEffect(() => {
     function handle(e) {
-      setFlies(prev => [...prev, { id: Date.now() + Math.random(), ...e.detail }])
+      const id = crypto.randomUUID()
+      setItems((prev) => [...prev, { id, ...e.detail }])
     }
     window.addEventListener('cart-fly', handle)
     return () => window.removeEventListener('cart-fly', handle)
   }, [])
 
   function remove(id) {
-    setFlies(prev => prev.filter(f => f.id !== id))
+    setItems((prev) => prev.filter((it) => it.id !== id))
   }
 
   return (
     <>
-      {flies.map(fly => {
-        const tx = window.innerWidth / 2 - fly.x
-        const ty = window.innerHeight - 76 - fly.y
+      {items.map((it) => {
+        const tx = window.innerWidth / 2 - it.x
+        const ty = window.innerHeight - 76 - it.y
         return (
           <span
-            key={fly.id}
+            key={it.id}
             className="fly-item"
-            style={{ left: fly.x, top: fly.y, '--tx': `${tx}px`, '--ty': `${ty}px` }}
-            onAnimationEnd={() => remove(fly.id)}
+            style={{ left: it.x, top: it.y, '--tx': `${tx}px`, '--ty': `${ty}px` }}
+            onAnimationEnd={() => remove(it.id)}
           >
-            {fly.emoji}
+            {it.emoji}
           </span>
         )
       })}

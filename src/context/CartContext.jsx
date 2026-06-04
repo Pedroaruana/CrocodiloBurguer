@@ -1,11 +1,14 @@
-import { createContext, useContext, useReducer, useEffect } from 'react'
+import { createContext, useContext, useEffect, useReducer } from 'react'
 
 const CartContext = createContext(null)
+
+const STORAGE_KEY = 'crocodilo-cart-v2'
+const STORAGE_KEY_OLD = 'crocodilo-cart-v1'
 
 function cartReducer(state, action) {
   switch (action.type) {
     case 'ADD': {
-      const idx = state.items.findIndex(i => i.cartId === action.cartId)
+      const idx = state.items.findIndex((i) => i.cartId === action.cartId)
       if (idx >= 0) {
         const items = [...state.items]
         items[idx] = { ...items[idx], quantity: items[idx].quantity + 1 }
@@ -13,27 +16,36 @@ function cartReducer(state, action) {
       }
       return {
         ...state,
-        items: [...state.items, {
-          product:     action.product,
-          extras:      action.extras || [],
-          observation: action.observation || '',
-          cartId:      action.cartId,
-          quantity:    1,
-        }],
+        items: [
+          ...state.items,
+          {
+            product: action.product,
+            extras: action.extras || [],
+            observation: action.observation || '',
+            cartId: action.cartId,
+            quantity: 1,
+          },
+        ],
       }
     }
     case 'REMOVE':
-      return { ...state, items: state.items.filter(i => i.cartId !== action.cartId) }
-    case 'UPDATE_QTY': {
-      if (action.quantity <= 0)
-        return { ...state, items: state.items.filter(i => i.cartId !== action.cartId) }
       return {
         ...state,
-        items: state.items.map(i =>
-          i.cartId === action.cartId ? { ...i, quantity: action.quantity } : i
+        items: state.items.filter((i) => i.cartId !== action.cartId),
+      }
+    case 'UPDATE_QTY':
+      if (action.quantity <= 0) {
+        return {
+          ...state,
+          items: state.items.filter((i) => i.cartId !== action.cartId),
+        }
+      }
+      return {
+        ...state,
+        items: state.items.map((i) =>
+          i.cartId === action.cartId ? { ...i, quantity: action.quantity } : i,
         ),
       }
-    }
     case 'CLEAR':
       return { ...state, items: [] }
     case 'OPEN_CART':
@@ -45,19 +57,13 @@ function cartReducer(state, action) {
   }
 }
 
-const STORAGE_KEY     = 'crocodilo-cart-v2'   // v2 = suporte a cartId + extras
-const STORAGE_KEY_OLD = 'crocodilo-cart-v1'
-
 function loadSaved() {
   try {
-    // Limpa formato antigo incompatível (sem cartId)
     localStorage.removeItem(STORAGE_KEY_OLD)
-
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
       const parsed = JSON.parse(raw)
-      // Migração defensiva: garante que todo item tem cartId válido
-      const items = (parsed.items || []).filter(i => i.cartId && i.product)
+      const items = (parsed.items || []).filter((i) => i.cartId && i.product)
       return { items, isOpen: false }
     }
   } catch {
@@ -74,8 +80,8 @@ export function CartProvider({ children }) {
   }, [state.items])
 
   const totalItems = state.items.reduce((s, i) => s + i.quantity, 0)
-  const subtotal   = state.items.reduce((s, i) => {
-    const extrasPrice = (i.extras || []).reduce((e, x) => e + x.price, 0)
+  const subtotal = state.items.reduce((s, i) => {
+    const extrasPrice = (i.extras || []).reduce((acc, x) => acc + x.price, 0)
     return s + (i.product.price + extrasPrice) * i.quantity
   }, 0)
 

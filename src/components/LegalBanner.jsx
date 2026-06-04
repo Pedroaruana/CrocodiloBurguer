@@ -1,25 +1,30 @@
 import { useState } from 'react'
 import './LegalBanner.css'
 
-const TICKER_TEXT =
-  '🐊 Carne de jacaré autorizada pelo IBAMA · Criadouro certificado pelo MAPA · Produto inspecionado pelo SIF · 100% rastreável · Espécie: Caiman crocodilus yacare · Sem risco de extinção · ' +
-  '🐊 Carne de jacaré autorizada pelo IBAMA · Criadouro certificado pelo MAPA · Produto inspecionado pelo SIF · 100% rastreável · Espécie: Caiman crocodilus yacare · Sem risco de extinção · '
+const TICKER_ITEMS = [
+  '🐊 Carne de jacaré autorizada pelo IBAMA',
+  'Criadouro certificado pelo MAPA',
+  'Produto inspecionado pelo SIF',
+  '100% rastreável',
+  'Espécie: Caiman crocodilus yacare',
+  'Sem risco de extinção',
+]
+
+const tickerText = Array(2).fill(TICKER_ITEMS.join(' · ')).join(' · ') + ' · '
 
 export default function LegalBanner() {
-  const [visible, setVisible]   = useState(true)
+  const [visible, setVisible] = useState(true)
   const [expanded, setExpanded] = useState(false)
 
   if (!visible) return null
 
   return (
     <div className="legal-banner">
-      {/* Faixa rolante */}
       <div className="legal-ticker-wrap">
-        <span className="legal-ticker">{TICKER_TEXT}</span>
+        <span className="legal-ticker">{tickerText}</span>
       </div>
 
       <div className="legal-main">
-        {/* Selo animado */}
         <div className="legal-seal">
           <span className="legal-seal-ring" />
           <span className="legal-seal-ring" />

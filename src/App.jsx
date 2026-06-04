@@ -18,28 +18,36 @@ import { categories, products, restaurant } from './data/menu'
 import './App.css'
 
 export default function App() {
-  const [search, setSearch]                   = useState('')
+  const [search, setSearch] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const [activeCategory, setActiveCategory]   = useState('destaques')
-  const [showCheckout, setShowCheckout]       = useState(false)
-  const [showAuth, setShowAuth]               = useState(false)
-  const [showOrders, setShowOrders]           = useState(false)
-  const sectionRefs  = useRef({})
-  const isScrolling  = useRef(false)
+  const [activeCategory, setActiveCategory] = useState('destaques')
+  const [showCheckout, setShowCheckout] = useState(false)
+  const [showAuth, setShowAuth] = useState(false)
+  const [showOrders, setShowOrders] = useState(false)
+
+  const sectionRefs = useRef({})
+  const isScrolling = useRef(false)
+
+  const isSearching = search.trim().length > 0
 
   useEffect(() => {
+    if (isSearching) return
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (isScrolling.current) return
-        entries.forEach(entry => {
-          if (entry.isIntersecting) setActiveCategory(entry.target.dataset.category)
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveCategory(entry.target.dataset.category)
+          }
         })
       },
       { rootMargin: '-40% 0px -55% 0px' },
     )
-    Object.values(sectionRefs.current).forEach(el => el && observer.observe(el))
+
+    Object.values(sectionRefs.current).forEach((el) => el && observer.observe(el))
     return () => observer.disconnect()
-  }, [])
+  }, [isSearching])
 
   function handleCategoryClick(categoryId) {
     setActiveCategory(categoryId)
@@ -48,115 +56,107 @@ export default function App() {
     setTimeout(() => { isScrolling.current = false }, 700)
   }
 
-  const filteredProducts = search.trim()
-    ? products.filter(p =>
-        p.name.toLowerCase().includes(search.toLowerCase()) ||
-        p.description.toLowerCase().includes(search.toLowerCase()),
+  const term = search.trim().toLowerCase()
+  const filtered = term
+    ? products.filter(
+        (p) =>
+          p.name.toLowerCase().includes(term) ||
+          p.description.toLowerCase().includes(term),
       )
     : products
 
-  const groupedProducts = categories.reduce((acc, cat) => {
-    acc[cat.id] = filteredProducts.filter(p => p.category === cat.id)
+  const grouped = categories.reduce((acc, cat) => {
+    acc[cat.id] = filtered.filter((p) => p.category === cat.id)
     return acc
   }, {})
 
-  const isSearching = search.trim().length > 0
-
   return (
     <AuthProvider>
-    <CartProvider>
-      <div className="app">
-        <Header
-          restaurant={restaurant}
-          onLoginClick={() => setShowAuth(true)}
-          onOrdersClick={() => setShowOrders(true)}
-        />
+      <CartProvider>
+        <div className="app">
+          <Header
+            restaurant={restaurant}
+            onLoginClick={() => setShowAuth(true)}
+            onOrdersClick={() => setShowOrders(true)}
+          />
 
-        <div className="sticky-top">
-          <SearchBar value={search} onChange={setSearch} />
-          {!isSearching && (
-            <CategoryNav
-              categories={categories}
-              active={activeCategory}
-              onSelect={handleCategoryClick}
-            />
-          )}
-        </div>
+          <div className="sticky-top">
+            <SearchBar value={search} onChange={setSearch} />
+            {!isSearching && (
+              <CategoryNav
+                categories={categories}
+                active={activeCategory}
+                onSelect={handleCategoryClick}
+              />
+            )}
+          </div>
 
-        <main className="main-content">
-          {!isSearching && <PromoBanner />}
-          {!isSearching && <LegalBanner />}
+          <main className="main-content">
+            {!isSearching && <PromoBanner />}
+            {!isSearching && <LegalBanner />}
 
-          {isSearching ? (
-            <div className="search-results-section">
-              <h2 className="section-title">
-                🔍 {filteredProducts.length} resultado{filteredProducts.length !== 1 ? 's' : ''}
-              </h2>
-              {filteredProducts.length === 0 ? (
-                <div className="empty-search">
-                  <span>🐊</span>
-                  <p>Nenhum produto encontrado</p>
-                  <small>Tente outro termo</small>
-                </div>
-              ) : (
-                filteredProducts.map(product => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onClick={() => setSelectedProduct(product)}
-                  />
-                ))
-              )}
-            </div>
-          ) : (
-            categories.map(cat => {
-              const items = groupedProducts[cat.id]
-              if (!items?.length) return null
-              return (
-                <section
-                  key={cat.id}
-                  className="category-section"
-                  data-category={cat.id}
-                  ref={el => { sectionRefs.current[cat.id] = el }}
-                >
-                  <h2 className="section-title">{cat.emoji} {cat.label}</h2>
-                  {items.map(product => (
+            {isSearching ? (
+              <div className="search-results-section">
+                <h2 className="section-title">
+                  🔍 {filtered.length} resultado{filtered.length !== 1 ? 's' : ''}
+                </h2>
+                {filtered.length === 0 ? (
+                  <div className="empty-search">
+                    <span>🐊</span>
+                    <p>Nenhum produto encontrado</p>
+                    <small>Tente outro termo</small>
+                  </div>
+                ) : (
+                  filtered.map((product) => (
                     <ProductCard
                       key={product.id}
                       product={product}
                       onClick={() => setSelectedProduct(product)}
                     />
-                  ))}
-                </section>
-              )
-            })
+                  ))
+                )}
+              </div>
+            ) : (
+              categories.map((cat) => {
+                const items = grouped[cat.id]
+                if (!items?.length) return null
+                return (
+                  <section
+                    key={cat.id}
+                    className="category-section"
+                    data-category={cat.id}
+                    ref={(el) => { sectionRefs.current[cat.id] = el }}
+                  >
+                    <h2 className="section-title">{cat.emoji} {cat.label}</h2>
+                    {items.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onClick={() => setSelectedProduct(product)}
+                      />
+                    ))}
+                  </section>
+                )
+              })
+            )}
+          </main>
+
+          <CartBar />
+          <CartDrawer onCheckout={() => setShowCheckout(true)} />
+          <FlyingItems />
+
+          {selectedProduct && (
+            <ProductModal
+              product={selectedProduct}
+              onClose={() => setSelectedProduct(null)}
+            />
           )}
-        </main>
 
-        <CartBar />
-        <CartDrawer onCheckout={() => setShowCheckout(true)} />
-        <FlyingItems />
-
-        {selectedProduct && (
-          <ProductModal
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-          />
-        )}
-
-        {showCheckout && (
-          <CheckoutPage onClose={() => setShowCheckout(false)} />
-        )}
-
-        {showAuth && (
-          <AuthModal onClose={() => setShowAuth(false)} />
-        )}
-
-        {showOrders && (
-          <OrdersPage onClose={() => setShowOrders(false)} />
-        )}
-      </div>
-    </CartProvider>
+          {showCheckout && <CheckoutPage onClose={() => setShowCheckout(false)} />}
+          {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
+          {showOrders && <OrdersPage onClose={() => setShowOrders(false)} />}
+        </div>
+      </CartProvider>
     </AuthProvider>
   )
 }
