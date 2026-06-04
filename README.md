@@ -107,7 +107,7 @@ Para PIX, é só clicar em **"Já paguei!"** depois de gerar o QR Code.
 
 ## Como rodar
 
-Pré-requisitos: [Node.js](https://nodejs.org/) v18+
+Pré-requisitos: [Node.js](https://nodejs.org/) v18 ou superior
 
 ```bash
 git clone https://github.com/Pedroaruana/CrocodiloBurguer.git
