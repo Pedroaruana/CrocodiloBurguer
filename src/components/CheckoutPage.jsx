@@ -166,14 +166,14 @@ export default function CheckoutPage({ onClose }) {
 
             <div className="checkout-field">
               <label className="checkout-label">Nome completo *</label>
-              <input className="checkout-input" placeholder="Seu nome" value={form.name}
-                onChange={e => set('name', e.target.value)} />
+              <input className="checkout-input" placeholder="Ex: Maria Silva" value={form.name}
+                onChange={e => set('name', e.target.value)} autoComplete="name" />
             </div>
 
             <div className="checkout-field">
               <label className="checkout-label">Telefone / WhatsApp *</label>
               <input className="checkout-input" placeholder="(11) 99999-9999" value={form.phone}
-                onChange={e => set('phone', e.target.value)} inputMode="tel" />
+                onChange={e => set('phone', e.target.value)} inputMode="tel" autoComplete="tel" />
             </div>
 
             <div className="checkout-row">
