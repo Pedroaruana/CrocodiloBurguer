@@ -14,6 +14,7 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
   const mountedRef = useRef(true)
 
   useEffect(() => {
+    mountedRef.current = true
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = ''
@@ -45,15 +46,24 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
     if (validationError) return setError(validationError)
 
     setLoading(true)
-    const result =
-      tab === 'login'
-        ? await login({ email: form.email, password: form.password })
-        : await register({ name: form.name.trim(), email: form.email, password: form.password })
+    try {
+      const result =
+        tab === 'login'
+          ? await login({ email: form.email, password: form.password })
+          : await register({ name: form.name.trim(), email: form.email, password: form.password })
 
-    if (!mountedRef.current) return
-    setLoading(false)
-    if (result.error) return setError(result.error)
-    onClose()
+      if (!mountedRef.current) return
+      if (result.error) {
+        setError(result.error)
+        return
+      }
+      onClose()
+    } catch (err) {
+      console.error('Erro no auth:', err)
+      if (mountedRef.current) setError('Algo deu errado. Tente novamente.')
+    } finally {
+      if (mountedRef.current) setLoading(false)
+    }
   }
 
   return (

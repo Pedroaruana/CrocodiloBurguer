@@ -6,11 +6,23 @@ const USERS_KEY = 'croco-users-v1'
 const SESSION_KEY = 'croco-session-v1'
 
 async function hashPassword(password) {
-  const data = new TextEncoder().encode(password)
-  const buf = await crypto.subtle.digest('SHA-256', data)
-  return Array.from(new Uint8Array(buf))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
+  // crypto.subtle só funciona em contexto seguro (HTTPS ou localhost).
+  // Quando o app é acessado via IP de rede no celular, usa fallback simples.
+  if (window.isSecureContext && crypto?.subtle) {
+    const data = new TextEncoder().encode(password)
+    const buf = await crypto.subtle.digest('SHA-256', data)
+    return Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
+  }
+
+  // Fallback: hash simples baseado em DJB2 + sal fixo
+  let hash = 5381
+  const salted = 'croco-salt-' + password
+  for (let i = 0; i < salted.length; i++) {
+    hash = ((hash << 5) + hash) ^ salted.charCodeAt(i)
+  }
+  return 'fallback:' + (hash >>> 0).toString(16)
 }
 
 function loadUsers() {
