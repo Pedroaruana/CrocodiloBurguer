@@ -47,7 +47,7 @@ const PAYMENTS = [
 ]
 
 export default function CheckoutPage({ onClose }) {
-  const { state, dispatch, subtotal } = useCart()
+  const { state, dispatch, subtotal, discount, couponInfo } = useCart()
   const { currentUser } = useAuth()
   const [payment, setPayment] = useState('pix')
   const [troco, setTroco] = useState('')
@@ -63,7 +63,7 @@ export default function CheckoutPage({ onClose }) {
     complement: '',
   })
 
-  const total = subtotal + restaurant.deliveryFee
+  const total = subtotal - discount + restaurant.deliveryFee
 
   function set(field, value) {
     setForm((f) => ({ ...f, [field]: value }))
@@ -254,6 +254,12 @@ export default function CheckoutPage({ onClose }) {
           <div className="checkout-total-row">
             <span>Taxa de entrega</span><span>{fmt(restaurant.deliveryFee)}</span>
           </div>
+          {discount > 0 && (
+            <div className="checkout-total-row" style={{ color: '#2d6a4f' }}>
+              <span>Desconto ({couponInfo.label})</span>
+              <span>−{fmt(discount)}</span>
+            </div>
+          )}
           <div className="checkout-total-row grand">
             <span>Total</span><span>{fmt(total)}</span>
           </div>

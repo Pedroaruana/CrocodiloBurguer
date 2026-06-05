@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useCart } from '../context/CartContext'
 import { restaurant } from '../data/menu'
 import './Cart.css'
@@ -6,9 +6,11 @@ import './Cart.css'
 const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 export default function CartDrawer({ onCheckout }) {
-  const { state, dispatch, totalItems, subtotal } = useCart()
+  const { state, dispatch, totalItems, subtotal, discount, total: cartTotal, couponInfo } = useCart()
+  const [couponInput, setCouponInput] = useState('')
+  const [couponError, setCouponError] = useState('')
   const { isOpen, items } = state
-  const total = subtotal + restaurant.deliveryFee
+  const total = cartTotal + restaurant.deliveryFee
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -27,6 +29,22 @@ export default function CartDrawer({ onCheckout }) {
   }
 
   const belowMinOrder = subtotal < restaurant.minOrder
+
+ function applyCoupon() {
+  const code = couponInput.trim().toUpperCase()
+  if (!code) return
+  if (code !== 'CROCO10' && code !== 'CROCO20') {
+    setCouponError('Cupom inválido')
+    return
+  }
+  dispatch({ type: 'APPLY_COUPON', code })
+  setCouponInput('')
+  setCouponError('')
+}
+
+function removeCoupon() {
+  dispatch({ type: 'REMOVE_COUPON' })
+}
 
   return (
     <div className="cart-overlay" onClick={close}>
@@ -104,10 +122,38 @@ export default function CartDrawer({ onCheckout }) {
               <span>Taxa de entrega</span>
               <span>{fmt(restaurant.deliveryFee)}</span>
             </div>
+            {discount > 0 && (
+              <div className="cart-summary-row" style={{ color: '#2d6a4f' }}>
+                <span>Desconto ({couponInfo.label})</span>
+                <span>−{fmt(discount)}</span>
+              </div>
+            )}
             <div className="cart-summary-row total">
               <span>Total</span>
               <span>{fmt(total)}</span>
             </div>
+
+            {state.coupon ? (
+              <div className="cart-coupon-applied">
+                <span>🎟️ Cupom <strong>{state.coupon}</strong> aplicado!</span>
+                <button onClick={removeCoupon} className="cart-coupon-remove">Remover</button>
+              </div>
+            ) : (
+              <div className="cart-coupon-box">
+                <input
+                  type="text"
+                  className="cart-coupon-input"
+                  placeholder="Tem cupom? Digite aqui"
+                  value={couponInput}
+                  onChange={(e) => {
+                    setCouponInput(e.target.value)
+                    setCouponError('')
+                  }}
+                />
+                <button onClick={applyCoupon} className="cart-coupon-btn">Aplicar</button>
+              </div>
+            )}
+            {couponError && <p className="cart-coupon-error">{couponError}</p>}
 
             <button
               className="cart-checkout-btn"

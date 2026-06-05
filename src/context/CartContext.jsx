@@ -5,6 +5,11 @@ const CartContext = createContext(null)
 const STORAGE_KEY = 'crocodilo-cart-v2'
 const STORAGE_KEY_OLD = 'crocodilo-cart-v1'
 
+const COUPONS = {
+  CROCO10: { discount: 0.10, label: '10% OFF' },
+  CROCO20: { discount: 0.20, label: '20% OFF' },
+}
+
 function cartReducer(state, action) {
   switch (action.type) {
     case 'ADD': {
@@ -46,8 +51,12 @@ function cartReducer(state, action) {
           i.cartId === action.cartId ? { ...i, quantity: action.quantity } : i,
         ),
       }
+    case 'APPLY_COUPON':
+      return { ...state, coupon: action.code }
+    case 'REMOVE_COUPON':
+      return { ...state, coupon: null }
     case 'CLEAR':
-      return { ...state, items: [] }
+      return { ...state, items: [], coupon: null }
     case 'OPEN_CART':
       return { ...state, isOpen: true }
     case 'CLOSE_CART':
@@ -64,20 +73,23 @@ function loadSaved() {
     if (raw) {
       const parsed = JSON.parse(raw)
       const items = (parsed.items || []).filter((i) => i.cartId && i.product)
-      return { items, isOpen: false }
+      return { items, isOpen: false, coupon: parsed.coupon ?? null }
     }
   } catch {
     localStorage.removeItem(STORAGE_KEY)
   }
-  return { items: [], isOpen: false }
+  return { items: [], isOpen: false, coupon: null }
 }
 
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(cartReducer, null, loadSaved)
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ items: state.items }))
-  }, [state.items])
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ items: state.items, coupon: state.coupon }),
+    )
+  }, [state.items, state.coupon])
 
   const totalItems = state.items.reduce((s, i) => s + i.quantity, 0)
   const subtotal = state.items.reduce((s, i) => {
@@ -85,8 +97,14 @@ export function CartProvider({ children }) {
     return s + (i.product.price + extrasPrice) * i.quantity
   }, 0)
 
+  const couponInfo = state.coupon ? COUPONS[state.coupon] : null
+  const discount = couponInfo ? subtotal * couponInfo.discount : 0
+  const total = subtotal - discount
+
   return (
-    <CartContext.Provider value={{ state, dispatch, totalItems, subtotal }}>
+    <CartContext.Provider
+      value={{ state, dispatch, totalItems, subtotal, discount, total, couponInfo }}
+    >
       {children}
     </CartContext.Provider>
   )

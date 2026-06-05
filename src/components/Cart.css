@@ -314,3 +314,83 @@
   color: var(--text-muted);
   margin-top: 8px;
 }
+/* ── Cupom de desconto ─────────────────────────── */
+.cart-coupon-box {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 6px;
+}
+
+.cart-coupon-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: var(--font);
+  color: var(--text-primary);
+  outline: none;
+  text-transform: uppercase;
+}
+
+.cart-coupon-input::placeholder {
+  color: var(--text-muted);
+  text-transform: none;
+}
+
+.cart-coupon-btn {
+  background: var(--croco-mid);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cart-coupon-btn:hover {
+  background: var(--croco-green);
+}
+
+.cart-coupon-applied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  background: rgba(82, 183, 136, 0.12);
+  border: 1px dashed var(--croco-light);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--croco-green);
+}
+
+.cart-coupon-applied strong {
+  font-weight: 800;
+}
+
+.cart-coupon-remove {
+  background: none;
+  border: none;
+  color: var(--accent-red);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cart-coupon-error {
+  font-size: 12px;
+  color: var(--accent-red);
+  text-align: center;
+  margin: -4px 0 10px;
+  font-weight: 600;
+}
