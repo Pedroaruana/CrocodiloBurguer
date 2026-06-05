@@ -17,7 +17,7 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em
 
 > **Decisão técnica:** persistência feita via `localStorage` (carrinho, sessão e pedidos). Foi intencional para o projeto ficar 100% front-end e deployável em qualquer host estático. Em produção real, isso viraria uma API.
 
-> **Nota sobre o histórico:** comecei o projeto, fiquei insatisfeito com a estrutura inicial e acabei apagando tudo pra recomeçar do zero. Por isso o primeiro commit traz a base já formada. Alguns commits posteriores também agrupam várias features porque eu desenvolvi em paralelo na minha máquina e só subi quando o conjunto estava funcionando — a iteração real foi maior do que o histórico aparenta.
+> **Sobre o histórico do Git:** esse projeto começou diferente. Eu já tinha mexido um pouco, não curti como tava ficando e apaguei tudo pra recomeçar do zero — por isso o primeiro commit já vem com bastante coisa. Em alguns commits depois eu também juntei várias features de uma vez, porque eu fui desenvolvendo na minha máquina e só subia quando o conjunto tava funcionando. Então a iteração real foi maior do que parece olhando só o `git log`.
 
 ---
 
