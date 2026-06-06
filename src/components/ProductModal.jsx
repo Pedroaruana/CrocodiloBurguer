@@ -25,7 +25,7 @@ function StarsFull({ rating }) {
   )
 }
 
-export default function ProductModal({ product, onClose }) {
+export default function ProductModal({ product, onClose, showToast }) {
   const { dispatch } = useCart()
   const [qty, setQty] = useState(1)
   const [selectedExtras, setSelectedExtras] = useState({})
@@ -53,6 +53,7 @@ export default function ProductModal({ product, onClose }) {
       observation: observation.trim(),
       cartId,
     })
+    showToast?.(`${product.emoji} ${product.name} adicionado!`)
     onClose()
   }
 

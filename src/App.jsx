@@ -14,6 +14,8 @@ import FlyingItems from './components/FlyingItem'
 import CheckoutPage from './components/CheckoutPage'
 import LegalBanner from './components/LegalBanner'
 import OrdersPage from './components/OrdersPage'
+import Toast from './components/Toast'
+import { useToast } from './hooks/useToast'
 import { categories, products, restaurant } from './data/menu'
 import './App.css'
 
@@ -24,6 +26,7 @@ export default function App() {
   const [showCheckout, setShowCheckout] = useState(false)
   const [showAuth, setShowAuth] = useState(false)
   const [showOrders, setShowOrders] = useState(false)
+  const { toast, showToast } = useToast()
 
   const sectionRefs = useRef({})
   const isScrolling = useRef(false)
@@ -142,13 +145,15 @@ export default function App() {
           </main>
 
           <CartBar />
-          <CartDrawer onCheckout={() => setShowCheckout(true)} />
+          <CartDrawer onCheckout={() => setShowCheckout(true)} showToast={showToast} />
           <FlyingItems />
+          <Toast toast={toast} />
 
           {selectedProduct && (
             <ProductModal
               product={selectedProduct}
               onClose={() => setSelectedProduct(null)}
+              showToast={showToast}
             />
           )}
 

@@ -5,7 +5,7 @@ import './Cart.css'
 
 const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
-export default function CartDrawer({ onCheckout }) {
+export default function CartDrawer({ onCheckout, showToast }) {
   const { state, dispatch, totalItems, subtotal, discount, total: cartTotal, couponInfo } = useCart()
   const [couponInput, setCouponInput] = useState('')
   const [couponError, setCouponError] = useState('')
@@ -30,21 +30,24 @@ export default function CartDrawer({ onCheckout }) {
 
   const belowMinOrder = subtotal < restaurant.minOrder
 
- function applyCoupon() {
-  const code = couponInput.trim().toUpperCase()
-  if (!code) return
-  if (code !== 'CROCO10' && code !== 'CROCO20') {
-    setCouponError('Cupom inválido')
-    return
+  function applyCoupon() {
+    const code = couponInput.trim().toUpperCase()
+    if (!code) return
+    if (code !== 'CROCO10' && code !== 'CROCO20') {
+      setCouponError('Cupom inválido')
+      showToast?.('Cupom inválido ou expirado', 'error')
+      return
+    }
+    dispatch({ type: 'APPLY_COUPON', code })
+    setCouponInput('')
+    setCouponError('')
+    showToast?.('🎟️ Cupom aplicado com sucesso!')
   }
-  dispatch({ type: 'APPLY_COUPON', code })
-  setCouponInput('')
-  setCouponError('')
-}
 
-function removeCoupon() {
-  dispatch({ type: 'REMOVE_COUPON' })
-}
+  function removeCoupon() {
+    dispatch({ type: 'REMOVE_COUPON' })
+    showToast?.('Cupom removido', 'info')
+  }
 
   return (
     <div className="cart-overlay" onClick={close}>
