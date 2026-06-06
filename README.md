@@ -53,6 +53,7 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em
 | Modal de produto | Bottom sheet com reviews e seletor de quantidade |
 | Carrinho | Adicionar, remover, ajustar quantidade, subtotal |
 | Persistência | Carrinho salvo no `localStorage` |
+| Toast de notificação | Mensagem animada ao adicionar item ou aplicar cupom |
 
 ### Cardápio Exótico
 | Feature | Descrição |
