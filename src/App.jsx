@@ -15,6 +15,7 @@ import CheckoutPage from './components/CheckoutPage'
 import LegalBanner from './components/LegalBanner'
 import OrdersPage from './components/OrdersPage'
 import Toast from './components/Toast'
+import ScrollToTop from './components/ScrollToTop'
 import { useToast } from './hooks/useToast'
 import { categories, products, restaurant } from './data/menu'
 import './App.css'
@@ -148,6 +149,7 @@ export default function App() {
           <CartDrawer onCheckout={() => setShowCheckout(true)} showToast={showToast} />
           <FlyingItems />
           <Toast toast={toast} />
+          <ScrollToTop />
 
           {selectedProduct && (
             <ProductModal
