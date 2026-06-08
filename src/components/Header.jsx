@@ -1,8 +1,10 @@
+import { useBusinessHours } from '../hooks/useBusinessHours'
 import Logo from './Logo'
 import { useAuth } from '../context/AuthContext'
 import './Header.css'
 
 export default function Header({ restaurant, onLoginClick, onOrdersClick }) {
+  const isOpen = useBusinessHours()
   const { currentUser, logout } = useAuth()
   const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -17,9 +19,9 @@ export default function Header({ restaurant, onLoginClick, onOrdersClick }) {
             Crocodilo <span>Burguer</span>
           </h1>
           <p className="header-tagline">🐊 {restaurant.tagline}</p>
-          <div className={`header-status ${restaurant.isOpen ? 'open' : 'closed'}`}>
+          <div className={`header-status ${isOpen ? 'open' : 'closed'}`}>
             <span className="header-status-dot" />
-            {restaurant.isOpen ? `Aberto · ${restaurant.openHours}` : 'Fechado agora'}
+            {isOpen ? `Aberto · ${restaurant.openHours}` : `Fechado · abre às 11h`}
           </div>
         </div>
 
