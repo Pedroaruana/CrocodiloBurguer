@@ -1,6 +1,6 @@
 # 🐊 Crocodilo Burguer
 
-> Cardápio digital mobile-first estilo Goomer. React + Vite, sem backend.
+> Cardápio digital mobile-first estilo Goomer. React + Vite + Supabase.
 
 🌐 **[Ver projeto ao vivo](https://crocodilo-burguer.vercel.app)**
 
@@ -15,7 +15,7 @@
 
 Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em UI/UX mobile. A ideia foi simular a experiência de um app de delivery real (carrinho, checkout, PIX, cartão, acompanhamento de pedidos) sem precisar de backend — tudo roda no navegador.
 
-> **Decisão técnica:** persistência feita via `localStorage` (carrinho, sessão e pedidos). Foi intencional para o projeto ficar 100% front-end e deployável em qualquer host estático. Em produção real, isso viraria uma API.
+> **Decisão técnica:** autenticação e pedidos são persistidos no **Supabase** (PostgreSQL em nuvem). O carrinho usa `localStorage` por ser dado temporário de sessão — faz sentido não precisar de rede pra isso. O deploy fica no Vercel com as variáveis de ambiente configuradas lá.
 
 > **Sobre o histórico do Git:** esse projeto começou diferente. Eu já tinha mexido um pouco, não curti como tava ficando e apaguei tudo pra recomeçar do zero — por isso o primeiro commit já vem com bastante coisa. Em alguns commits depois eu também juntei várias features de uma vez, porque eu fui desenvolvendo na minha máquina e só subia quando o conjunto tava funcionando. Então a iteração real foi maior do que parece olhando só o `git log`.
 
@@ -67,9 +67,9 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em
 | Feature | Descrição |
 |---|---|
 | Login / Cadastro | Modal com abas e validação de campos |
-| Senhas hasheadas | SHA-256 via Web Crypto API (não armazena plaintext) |
+| Supabase Auth | Autenticação real com email/senha via Supabase |
 | Avatar | Inicial do nome do usuário logado no header |
-| Sessão persistente | Continua logado após fechar o app |
+| Sessão persistente | Token gerenciado pelo Supabase, continua logado após fechar |
 
 ### Checkout & Pagamento
 | Feature | Descrição |
@@ -135,10 +135,10 @@ Abra o IP que aparecer no terminal.
 
 - **React 18** — Componentes funcionais, hooks, Context API, useReducer
 - **Vite 5** — Build e dev server com HMR
+- **Supabase** — Autenticação e banco de dados PostgreSQL em nuvem
 - **CSS puro** — Custom properties, animações, mobile-first
-- **LocalStorage** — Persistência de carrinho, sessão e pedidos
+- **LocalStorage** — Persistência do carrinho (dado temporário de sessão)
 - **SVG** — Logo, QR Code do PIX e bandeiras de cartão gerados via código
-- **Web Crypto API** — Hash SHA-256 das senhas
 
 ---
 
@@ -150,28 +150,28 @@ Esse foi um dos projetos mais completos que fiz sozinho. Algumas coisas que vale
 - **`IntersectionObserver`** para o scroll-spy das categorias foi a parte mais difícil — testar com a busca ativa quebrou várias vezes até eu entender que o observer precisa ser recriado.
 - **Validar cartão de verdade** com o algoritmo de Luhn deu um trabalho braboso, mas tirou aquele cheiro de "form fake" do checkout.
 - **localStorage** é simples, mas exige cuidado: `try/catch` em todo lugar e migração quando o schema dos dados muda (passei do `v1` para `v2` no carrinho).
-- **`crypto.subtle.digest()`** para hashear senhas — não é bcrypt, mas para um projeto front-end já é muito melhor que salvar plaintext.
+- **Integrar o Supabase Auth** foi diferente do que eu imaginava — o usuário logado não fica disponível na hora, ele chega de forma assíncrona. Tive que adicionar um estado de carregamento pra evitar a tela piscar com o usuário "deslogado" por um segundo antes de carregar a sessão.
+- **Histórico de busca com localStorage** parece simples mas tem um detalhe chato: fechar o dropdown quando o usuário clica fora dele. Tive que usar `mousedown` no `document` com uma ref pro container pra detectar clique fora sem quebrar o restante da UI.
 
 ---
 
 ## Próximos passos
 
-Coisas que ficariam pra uma v2 com backend:
+Coisas que ficariam pra uma v2:
 
-- API real (Node + Postgres) para usuários, pedidos e produtos
-- Autenticação com JWT e refresh token
-- Painel admin para gerenciar o cardápio
+- Painel admin para gerenciar o cardápio em tempo real
 - Integração de pagamento de verdade (Stripe / Mercado Pago / Pix dinâmico)
 - Notificações push quando o status do pedido mudar
 - Testes automatizados (Vitest + Testing Library)
 - PWA com cache offline
+- Rate limiting no login via Supabase Edge Functions
 
 ---
 
 ## Limitações conhecidas
 
-- Os dados ficam só no navegador — se o usuário limpar o cache, perde tudo
-- Sem rate limiting no login (precisaria de backend)
+- O carrinho fica no navegador — se limpar o cache, perde os itens não finalizados
+- Sem rate limiting no login (daria pra implementar com Supabase Edge Functions)
 - O QR Code do PIX é decorativo (não gera código EMV real)
 - Imagens dos produtos vêm do Unsplash — algumas podem não carregar se o CDN cair
 
@@ -182,3 +182,9 @@ Coisas que ficariam pra uma v2 com backend:
 Feito por **Pedro Aruanã**
 
 [![GitHub](https://img.shields.io/badge/GitHub-Pedroaruana-181717?style=flat-square&logo=github)](https://github.com/Pedroaruana)
+
+---
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
