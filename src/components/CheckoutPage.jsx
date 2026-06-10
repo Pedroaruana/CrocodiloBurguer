@@ -69,7 +69,7 @@ export default function CheckoutPage({ onClose }) {
     setForm((f) => ({ ...f, [field]: value }))
   }
 
-  function handleConfirm() {
+  async function handleConfirm() {
     if (!form.name || !form.phone || !form.street || !form.number) {
       alert('Preencha seu nome, telefone, rua e número.')
       return
@@ -85,15 +85,13 @@ export default function CheckoutPage({ onClose }) {
         return alert('CVV inválido.')
     }
     const order = {
-      id: crypto.randomUUID(),
       userEmail: currentUser?.email ?? 'guest',
       items: state.items,
       total,
       address: form,
       payment,
-      createdAt: Date.now(),
     }
-    saveOrder(order)
+    await saveOrder(order)
     setSuccess(true)
     dispatch({ type: 'CLEAR' })
   }

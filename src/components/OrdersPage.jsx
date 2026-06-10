@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { supabase } from '../lib/supabase'
 import './OrdersPage.css'
 
-const ORDERS_KEY = 'croco-orders-v1'
 const REFRESH_MS = 30_000
 
 const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -15,7 +15,7 @@ const STEPS = [
 ]
 
 function getStatus(createdAt) {
-  const mins = (Date.now() - createdAt) / 60000
+  const mins = (Date.now() - new Date(createdAt).getTime()) / 60000
   if (mins < 3) return STEPS[0]
   if (mins < 15) return STEPS[1]
   if (mins < 40) return STEPS[2]
@@ -23,7 +23,7 @@ function getStatus(createdAt) {
 }
 
 function getEta(createdAt, statusKey) {
-  const mins = (Date.now() - createdAt) / 60000
+  const mins = (Date.now() - new Date(createdAt).getTime()) / 60000
   if (statusKey === 'confirmado') return `Previsão: ~${Math.max(37, Math.round(40 - mins))} min`
   if (statusKey === 'preparando') return `Previsão: ~${Math.max(25, Math.round(40 - mins))} min`
   if (statusKey === 'a_caminho') return `Chegando em ~${Math.max(5, Math.round(40 - mins))} min`
@@ -40,22 +40,15 @@ function formatDate(ts) {
   })
 }
 
-export function saveOrder(order) {
-  try {
-    const existing = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]')
-    localStorage.setItem(ORDERS_KEY, JSON.stringify([order, ...existing]))
-  } catch {
-    // localStorage might be unavailable (private mode / quota); fail silently
-  }
-}
-
-export function getOrders(userEmail) {
-  try {
-    const all = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]')
-    return all.filter((o) => o.userEmail === userEmail)
-  } catch {
-    return []
-  }
+export async function saveOrder(order) {
+  const { error } = await supabase.from('orders').insert({
+    user_email: order.userEmail,
+    items: order.items,
+    total: order.total,
+    address: order.address,
+    payment: order.payment,
+  })
+  if (error) console.error('Erro ao salvar pedido:', error)
 }
 
 export default function OrdersPage({ onClose }) {
@@ -63,13 +56,21 @@ export default function OrdersPage({ onClose }) {
   const [orders, setOrders] = useState([])
   const [, forceTick] = useState(0)
 
-  useEffect(() => {
+  async function fetchOrders() {
     if (!currentUser) return
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('user_email', currentUser.email)
+      .order('created_at', { ascending: false })
+    if (!error && data) setOrders(data)
+  }
 
-    setOrders(getOrders(currentUser.email))
+  useEffect(() => {
+    fetchOrders()
 
     const id = setInterval(() => {
-      setOrders(getOrders(currentUser.email))
+      fetchOrders()
       forceTick((t) => t + 1)
     }, REFRESH_MS)
 
@@ -99,17 +100,16 @@ export default function OrdersPage({ onClose }) {
             </div>
           ) : (
             orders.map(order => {
-              const status   = getStatus(order.createdAt)
-              const stepIdx  = STEPS.findIndex(s => s.key === status.key)
-              const eta      = getEta(order.createdAt, status.key)
+              const status  = getStatus(order.created_at)
+              const stepIdx = STEPS.findIndex(s => s.key === status.key)
+              const eta     = getEta(order.created_at, status.key)
 
               return (
                 <div key={order.id} className="order-card">
-                  {/* Cabeçalho */}
                   <div className="order-card-header">
                     <div>
-                      <p className="order-id">Pedido #{order.id}</p>
-                      <p className="order-date">{formatDate(order.createdAt)}</p>
+                      <p className="order-id">Pedido #{order.id.slice(0, 8)}</p>
+                      <p className="order-date">{formatDate(order.created_at)}</p>
                     </div>
                     <div className={`order-status-badge ${status.key}`}>
                       <span className="order-status-dot" />
@@ -117,7 +117,6 @@ export default function OrdersPage({ onClose }) {
                     </div>
                   </div>
 
-                  {/* Stepper */}
                   <div className="order-stepper">
                     {STEPS.map((step, i) => (
                       <div
@@ -132,7 +131,6 @@ export default function OrdersPage({ onClose }) {
                     ))}
                   </div>
 
-                  {/* Itens */}
                   <div className="order-items">
                     {order.items.map(({ product, quantity }) => (
                       <div key={product.id} className="order-item-row">
@@ -150,7 +148,6 @@ export default function OrdersPage({ onClose }) {
                     ))}
                   </div>
 
-                  {/* Footer */}
                   <div className="order-card-footer">
                     <div>
                       <p className="order-total-label">Total pago</p>
