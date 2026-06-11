@@ -13,7 +13,7 @@
 
 ## Sobre o projeto
 
-Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em UI/UX mobile. A ideia foi simular a experiência de um app de delivery real (carrinho, checkout, PIX, cartão, acompanhamento de pedidos) sem precisar de backend — tudo roda no navegador.
+Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em UI/UX mobile. A ideia foi simular a experiência de um app de delivery real — carrinho, checkout, PIX, cartão, acompanhamento de pedidos — com autenticação e banco de dados reais via Supabase.
 
 > **Decisão técnica:** autenticação e pedidos são persistidos no **Supabase** (PostgreSQL em nuvem). O carrinho usa `localStorage` por ser dado temporário de sessão — faz sentido não precisar de rede pra isso. O deploy fica no Vercel com as variáveis de ambiente configuradas lá.
 
