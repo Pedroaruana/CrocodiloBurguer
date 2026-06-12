@@ -160,12 +160,10 @@ Esse foi um dos projetos mais completos que fiz sozinho. Algumas coisas que vale
 
 Coisas que ficariam pra uma v2:
 
-- Painel admin para gerenciar o cardápio em tempo real
-- Integração de pagamento de verdade (Stripe / Mercado Pago / Pix dinâmico)
-- Notificações push quando o status do pedido mudar
+- Painel admin para gerenciar o cardápio
+- Integração de pagamento real (Stripe / Mercado Pago)
 - Testes automatizados (Vitest + Testing Library)
 - PWA com cache offline
-- Rate limiting no login via Supabase Edge Functions
 
 ---
 
