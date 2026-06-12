@@ -82,6 +82,7 @@ export default function App() {
             restaurant={restaurant}
             onLoginClick={() => setShowAuth(true)}
             onOrdersClick={() => setShowOrders(true)}
+            showToast={showToast}
           />
 
           <div className="sticky-top">
