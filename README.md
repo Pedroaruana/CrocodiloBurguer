@@ -70,6 +70,7 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em
 | Supabase Auth | Autenticação real com email/senha via Supabase |
 | Avatar | Inicial do nome do usuário logado no header |
 | Sessão persistente | Token gerenciado pelo Supabase, continua logado após fechar |
+| Menu do usuário | Dropdown com Minha Conta, Endereços, Cartões e Ajuda |
 
 ### Checkout & Pagamento
 | Feature | Descrição |
