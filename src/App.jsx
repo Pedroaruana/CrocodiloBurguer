@@ -16,6 +16,7 @@ import LegalBanner from './components/LegalBanner'
 import OrdersPage from './components/OrdersPage'
 import Toast from './components/Toast'
 import ScrollToTop from './components/ScrollToTop'
+import Footer from './components/Footer'
 import { useToast } from './hooks/useToast'
 import { categories, products, restaurant } from './data/menu'
 import './App.css'
@@ -146,6 +147,10 @@ export default function App() {
             )}
           </main>
 
+          <Footer
+            onOrdersClick={() => setShowOrders(true)}
+            onLoginClick={() => setShowAuth(true)}
+          />
           <CartBar />
           <CartDrawer onCheckout={() => setShowCheckout(true)} showToast={showToast} />
           <FlyingItems />
