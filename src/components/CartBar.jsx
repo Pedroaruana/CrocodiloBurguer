@@ -1,10 +1,21 @@
 import { useCart } from '../context/CartContext'
+import { useEffect, useRef, useState } from 'react'
 import './Cart.css'
 
 const fmt = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 export default function CartBar() {
   const { totalItems, subtotal, dispatch } = useCart()
+  const [bump, setBump] = useState(false)
+  const prevItems = useRef(totalItems)
+
+  useEffect(() => {
+    if (totalItems > prevItems.current) {
+      setBump(true)
+      setTimeout(() => setBump(false), 350)
+    }
+    prevItems.current = totalItems
+  }, [totalItems])
 
   if (totalItems === 0) return null
 
@@ -15,7 +26,7 @@ export default function CartBar() {
         onClick={() => dispatch({ type: 'OPEN_CART' })}
         aria-label="Ver carrinho"
       >
-        <span className="cart-bar-count">{totalItems}</span>
+        <span className={`cart-bar-count ${bump ? 'bump' : ''}`}>{totalItems}</span>
         <span className="cart-bar-label">🛒 Ver carrinho</span>
         <span className="cart-bar-total">{fmt(subtotal)}</span>
       </button>
