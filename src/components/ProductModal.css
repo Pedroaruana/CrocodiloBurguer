@@ -102,6 +102,11 @@
   background: rgba(0,0,0,0.55);
 }
 
+.modal-share:active {
+  background: var(--croco-mid);
+  transform: scale(0.92);
+}
+
 .modal-body {
   padding: 20px 20px 0;
   overflow-y: auto;
