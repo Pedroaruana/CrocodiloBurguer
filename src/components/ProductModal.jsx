@@ -44,6 +44,20 @@ export default function ProductModal({ product, onClose, showToast }) {
     setSelectedExtras(prev => ({ ...prev, [id]: !prev[id] }))
   }
 
+  async function handleShare() {
+    const text = `${product.emoji} ${product.name} — ${fmt(product.price)}\n${product.description}`
+    const url = window.location.href
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: product.name, text, url })
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(`${text}\n${url}`)
+      showToast?.('🔗 Link copiado!', 'info')
+    }
+  }
+
   function handleAdd() {
     const cartId = `${product.id}|${chosenExtras.map(e => e.id).sort().join(',')}`
     dispatch({
@@ -71,6 +85,12 @@ export default function ProductModal({ product, onClose, showToast }) {
             />
           )}
           <button className="modal-close" onClick={onClose} aria-label="Fechar">✕</button>
+          <button className="modal-share" onClick={handleShare} aria-label="Compartilhar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
         </div>
 
         <div className="modal-body">
