@@ -67,8 +67,14 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
   }
 
   return (
-    <div className="auth-overlay" onClick={onClose}>
-      <div className="auth-sheet" onClick={e => e.stopPropagation()}>
+    <div className="auth-overlay" onClick={onClose} aria-hidden="true">
+      <div
+        className="auth-sheet"
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={tab === 'login' ? 'Entrar na conta' : 'Criar conta'}
+      >
 
         <div className="auth-header">
           <span className="auth-logo">🐊</span>

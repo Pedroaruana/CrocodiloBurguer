@@ -57,6 +57,8 @@ export default function Header({ restaurant, onLoginClick, onOrdersClick, showTo
               className="header-avatar"
               onClick={() => setShowMenu(s => !s)}
               aria-label="Menu do usuário"
+              aria-expanded={showMenu}
+              aria-haspopup="menu"
               title={currentUser.name}
             >
               {currentUser.name.charAt(0).toUpperCase()}

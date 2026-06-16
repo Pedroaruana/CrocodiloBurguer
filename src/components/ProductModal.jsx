@@ -72,8 +72,14 @@ export default function ProductModal({ product, onClose, showToast }) {
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-sheet" onClick={e => e.stopPropagation()}>
+    <div className="modal-overlay" onClick={onClose} aria-hidden="true">
+      <div
+        className="modal-sheet"
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={product.name}
+      >
         <div className="modal-hero" style={{ background: product.gradient }}>
           <span className="modal-hero-emoji">{product.emoji}</span>
           {product.image && (

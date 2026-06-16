@@ -50,8 +50,14 @@ export default function CartDrawer({ onCheckout, showToast }) {
   }
 
   return (
-    <div className="cart-overlay" onClick={close}>
-      <div className="cart-drawer" onClick={e => e.stopPropagation()}>
+    <div className="cart-overlay" onClick={close} aria-hidden="true">
+      <div
+        className="cart-drawer"
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Carrinho de compras"
+      >
         <div className="cart-header">
           <h2 className="cart-title">🛒 Meu Pedido</h2>
           <button className="cart-close" onClick={close} aria-label="Fechar">✕</button>
