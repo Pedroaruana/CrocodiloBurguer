@@ -12,15 +12,23 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const mountedRef = useRef(true)
+  const sheetRef = useRef(null)
 
   useEffect(() => {
     mountedRef.current = true
     document.body.style.overflow = 'hidden'
+    sheetRef.current?.querySelector('button, input')?.focus()
     return () => {
       document.body.style.overflow = ''
       mountedRef.current = false
     }
   }, [])
+
+  useEffect(() => {
+    function onKey(e) { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
 
   function set(field, value) {
     setForm((f) => ({ ...f, [field]: value }))
@@ -74,6 +82,7 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
         role="dialog"
         aria-modal="true"
         aria-label={tab === 'login' ? 'Entrar na conta' : 'Criar conta'}
+        ref={sheetRef}
       >
 
         <div className="auth-header">

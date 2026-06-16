@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useCart } from '../context/CartContext'
 import { restaurant } from '../data/menu'
 import './Cart.css'
@@ -11,11 +11,22 @@ export default function CartDrawer({ onCheckout, showToast }) {
   const [couponError, setCouponError] = useState('')
   const { isOpen, items } = state
   const total = cartTotal + restaurant.deliveryFee
+  const drawerRef = useRef(null)
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    drawerRef.current?.querySelector('button')?.focus()
+    function onKey(e) {
+      if (e.key === 'Escape') dispatch({ type: 'CLOSE_CART' })
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [isOpen, dispatch])
 
   if (!isOpen) return null
 
@@ -57,6 +68,7 @@ export default function CartDrawer({ onCheckout, showToast }) {
         role="dialog"
         aria-modal="true"
         aria-label="Carrinho de compras"
+        ref={drawerRef}
       >
         <div className="cart-header">
           <h2 className="cart-title">🛒 Meu Pedido</h2>

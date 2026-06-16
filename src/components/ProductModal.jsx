@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useCart } from '../context/CartContext'
 import './ProductModal.css'
 
@@ -30,11 +30,32 @@ export default function ProductModal({ product, onClose, showToast }) {
   const [qty, setQty] = useState(1)
   const [selectedExtras, setSelectedExtras] = useState({})
   const [observation, setObservation] = useState('')
+  const sheetRef = useRef(null)
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
+    sheetRef.current?.querySelector('button')?.focus()
     return () => { document.body.style.overflow = '' }
   }, [])
+
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape') { onClose(); return }
+      if (e.key !== 'Tab') return
+      const focusable = sheetRef.current?.querySelectorAll(
+        'button, input, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      if (!focusable?.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+        e.preventDefault()
+        ;(e.shiftKey ? last : first).focus()
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
 
   const chosenExtras = ADICIONAIS.filter(e => selectedExtras[e.id])
   const extrasTotal  = chosenExtras.reduce((s, e) => s + e.price, 0)
@@ -79,6 +100,7 @@ export default function ProductModal({ product, onClose, showToast }) {
         role="dialog"
         aria-modal="true"
         aria-label={product.name}
+        ref={sheetRef}
       >
         <div className="modal-hero" style={{ background: product.gradient }}>
           <span className="modal-hero-emoji">{product.emoji}</span>
