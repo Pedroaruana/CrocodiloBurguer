@@ -53,10 +53,23 @@ export function AuthProvider({ children }) {
     setCurrentUser(null)
   }
 
+  async function updateName(name) {
+    const { error } = await supabase.auth.updateUser({ data: { name } })
+    if (error) return { error: error.message }
+    setCurrentUser(prev => ({ ...prev, name }))
+    return { success: true }
+  }
+
+  async function updatePassword(password) {
+    const { error } = await supabase.auth.updateUser({ password })
+    if (error) return { error: error.message }
+    return { success: true }
+  }
+
   if (loading) return null
 
   return (
-    <AuthContext.Provider value={{ currentUser, register, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, register, login, logout, updateName, updatePassword }}>
       {children}
     </AuthContext.Provider>
   )

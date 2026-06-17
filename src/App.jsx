@@ -14,6 +14,7 @@ import FlyingItems from './components/FlyingItem'
 import CheckoutPage from './components/CheckoutPage'
 import LegalBanner from './components/LegalBanner'
 import OrdersPage from './components/OrdersPage'
+import MinhaConta from './components/MinhaConta'
 import Toast from './components/Toast'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
@@ -28,6 +29,7 @@ export default function App() {
   const [showCheckout, setShowCheckout] = useState(false)
   const [showAuth, setShowAuth] = useState(false)
   const [showOrders, setShowOrders] = useState(false)
+  const [showMinhaConta, setShowMinhaConta] = useState(false)
   const { toast, showToast } = useToast()
 
   const sectionRefs = useRef({})
@@ -83,6 +85,7 @@ export default function App() {
             restaurant={restaurant}
             onLoginClick={() => setShowAuth(true)}
             onOrdersClick={() => setShowOrders(true)}
+            onMinhaContaClick={() => setShowMinhaConta(true)}
             showToast={showToast}
           />
 
@@ -168,6 +171,7 @@ export default function App() {
           {showCheckout && <CheckoutPage onClose={() => setShowCheckout(false)} />}
           {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
           {showOrders && <OrdersPage onClose={() => setShowOrders(false)} />}
+          {showMinhaConta && <MinhaConta onClose={() => setShowMinhaConta(false)} showToast={showToast} />}
         </div>
       </CartProvider>
     </AuthProvider>
