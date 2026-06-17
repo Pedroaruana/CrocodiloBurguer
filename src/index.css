@@ -65,3 +65,16 @@ img {
 ::-webkit-scrollbar {
   width: 0;
 }
+
+/* Foco visível para navegação por teclado */
+:focus-visible {
+  outline: 3px solid var(--croco-light);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
+}
