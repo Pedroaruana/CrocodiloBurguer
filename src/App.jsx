@@ -15,6 +15,7 @@ import CheckoutPage from './components/CheckoutPage'
 import LegalBanner from './components/LegalBanner'
 import OrdersPage from './components/OrdersPage'
 import MinhaConta from './components/MinhaConta'
+import MeusEnderecos from './components/MeusEnderecos'
 import Toast from './components/Toast'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
@@ -30,6 +31,7 @@ export default function App() {
   const [showAuth, setShowAuth] = useState(false)
   const [showOrders, setShowOrders] = useState(false)
   const [showMinhaConta, setShowMinhaConta] = useState(false)
+  const [showEnderecos, setShowEnderecos] = useState(false)
   const { toast, showToast } = useToast()
 
   const sectionRefs = useRef({})
@@ -86,6 +88,7 @@ export default function App() {
             onLoginClick={() => setShowAuth(true)}
             onOrdersClick={() => setShowOrders(true)}
             onMinhaContaClick={() => setShowMinhaConta(true)}
+            onEnderecosClick={() => setShowEnderecos(true)}
             showToast={showToast}
           />
 
@@ -172,6 +175,7 @@ export default function App() {
           {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
           {showOrders && <OrdersPage onClose={() => setShowOrders(false)} />}
           {showMinhaConta && <MinhaConta onClose={() => setShowMinhaConta(false)} showToast={showToast} />}
+          {showEnderecos && <MeusEnderecos onClose={() => setShowEnderecos(false)} showToast={showToast} />}
         </div>
       </CartProvider>
     </AuthProvider>
