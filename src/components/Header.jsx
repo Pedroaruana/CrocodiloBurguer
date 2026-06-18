@@ -4,7 +4,7 @@ import Logo from './Logo'
 import { useAuth } from '../context/AuthContext'
 import './Header.css'
 
-export default function Header({ restaurant, onLoginClick, onOrdersClick, onMinhaContaClick, onEnderecosClick, showToast }) {
+export default function Header({ restaurant, onLoginClick, onOrdersClick, onMinhaContaClick, onEnderecosClick, onCartoesClick, onAjudaClick, showToast }) {
   const isOpen = useBusinessHours()
   const { currentUser, logout } = useAuth()
   const [showMenu, setShowMenu] = useState(false)
@@ -77,10 +77,10 @@ export default function Header({ restaurant, onLoginClick, onOrdersClick, onMinh
                 <button className="user-dropdown-item" onClick={() => { setShowMenu(false); onEnderecosClick?.() }}>
                   📍 Meus Endereços
                 </button>
-                <button className="user-dropdown-item" onClick={() => handleComingSoon('Cartões Salvos')}>
+                <button className="user-dropdown-item" onClick={() => { setShowMenu(false); onCartoesClick?.() }}>
                   💳 Cartões Salvos
                 </button>
-                <button className="user-dropdown-item" onClick={() => handleComingSoon('Ajuda')}>
+                <button className="user-dropdown-item" onClick={() => { setShowMenu(false); onAjudaClick?.() }}>
                   ❓ Ajuda
                 </button>
                 <div className="user-dropdown-divider" />

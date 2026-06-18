@@ -1,0 +1,176 @@
+.cs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 400;
+  display: flex;
+  align-items: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+
+.cs-sheet {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 24px 24px 0 0;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.cs-title { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+
+.cs-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg); font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); transition: background 0.2s;
+}
+.cs-close:hover { background: var(--border); }
+
+.cs-body {
+  overflow-y: auto; flex: 1;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.cs-empty {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; padding: 40px 24px;
+  color: var(--text-secondary);
+}
+.cs-empty span { font-size: 48px; }
+.cs-empty p { font-size: 16px; font-weight: 600; }
+.cs-empty small { font-size: 13px; color: var(--text-muted); }
+
+.cs-list { display: flex; flex-direction: column; gap: 14px; }
+
+.cs-card {
+  border-radius: 16px;
+  padding: 18px 20px;
+  color: white;
+  display: flex; flex-direction: column; gap: 14px;
+  min-height: 130px;
+  position: relative;
+  box-shadow: var(--shadow-md);
+}
+
+.cs-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cs-card-bandeira { font-size: 13px; font-weight: 700; opacity: 0.9; letter-spacing: 1px; }
+
+.cs-card-remove {
+  background: rgba(255,255,255,0.2);
+  border: none; color: white;
+  width: 26px; height: 26px;
+  border-radius: 50%; font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.15s;
+}
+.cs-card-remove:hover { background: rgba(255,255,255,0.35); }
+
+.cs-card-number {
+  font-size: 17px; font-weight: 700; letter-spacing: 3px;
+  font-family: monospace;
+}
+
+.cs-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.cs-card-nome { font-size: 12px; font-weight: 600; opacity: 0.85; letter-spacing: 1px; }
+.cs-card-validade { font-size: 13px; font-weight: 700; opacity: 0.9; }
+
+.cs-add-btn {
+  width: 100%; height: 48px;
+  border: 2px dashed var(--border); border-radius: 14px;
+  font-size: 14px; font-weight: 700;
+  color: var(--croco-mid); font-family: var(--font);
+  cursor: pointer; background: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.cs-add-btn:hover { border-color: var(--croco-light); background: #f0faf4; }
+
+.cs-form { display: flex; flex-direction: column; gap: 12px; }
+
+.cs-preview {
+  border-radius: 16px; padding: 18px 20px;
+  color: white; display: flex; flex-direction: column; gap: 14px;
+  min-height: 120px; margin-bottom: 4px;
+  transition: background 0.3s;
+  box-shadow: var(--shadow-md);
+}
+
+.cs-preview-bandeira { font-size: 13px; font-weight: 700; opacity: 0.85; letter-spacing: 1px; }
+
+.cs-preview-number {
+  font-size: 16px; font-weight: 700;
+  letter-spacing: 3px; font-family: monospace;
+}
+
+.cs-preview-bottom {
+  display: flex; justify-content: space-between;
+  font-size: 12px; font-weight: 600; opacity: 0.85;
+  letter-spacing: 1px;
+}
+
+.cs-label {
+  display: flex; flex-direction: column;
+  gap: 6px; font-size: 12px; font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.cs-input {
+  height: 44px; border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 0 14px;
+  font-size: 14px; font-family: var(--font);
+  color: var(--text-primary); background: white;
+  transition: border-color 0.15s; width: 100%; box-sizing: border-box;
+}
+.cs-input:focus { outline: none; border-color: var(--croco-mid); }
+
+.cs-row { display: flex; gap: 10px; }
+
+.cs-disclaimer {
+  font-size: 11px; color: var(--text-muted);
+  text-align: center; margin-top: 2px;
+}
+
+.cs-form-actions { display: flex; gap: 10px; margin-top: 4px; }
+
+.cs-cancel-btn {
+  flex: 1; height: 46px;
+  border: 2px solid var(--border); border-radius: 12px;
+  font-size: 14px; font-weight: 700; font-family: var(--font);
+  color: var(--text-secondary); background: none; cursor: pointer;
+  transition: background 0.15s;
+}
+.cs-cancel-btn:hover { background: var(--bg); }
+
+.cs-save-btn {
+  flex: 2; height: 46px;
+  background: var(--croco-mid); color: white;
+  border: none; border-radius: 12px;
+  font-size: 14px; font-weight: 700; font-family: var(--font);
+  cursor: pointer; transition: background 0.2s, transform 0.15s;
+}
+.cs-save-btn:hover { background: var(--croco-green); }
+.cs-save-btn:active { transform: scale(0.98); }
