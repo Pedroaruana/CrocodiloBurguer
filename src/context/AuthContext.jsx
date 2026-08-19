@@ -8,15 +8,20 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setCurrentUser({
-          name: session.user.user_metadata?.name ?? session.user.email,
-          email: session.user.email,
-        })
-      }
-      setLoading(false)
-    })
+    supabase.auth.getSession()
+      .then(({ data: { session } }) => {
+        if (session?.user) {
+          setCurrentUser({
+            name: session.user.user_metadata?.name ?? session.user.email,
+            email: session.user.email,
+          })
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        supabase.auth.signOut()
+        setLoading(false)
+      })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
