@@ -38,6 +38,7 @@ describe('AuthContext', () => {
     expect(result.current.currentUser).toEqual({ name: 'Pedro', email: 'pedro@teste.com' })
   })
 
+  // regressão: token velho fazia getSession() rejeitar e a tela ficava branca pra sempre
   it('não trava a tela quando a renovação da sessão falha', async () => {
     supabase.auth.getSession.mockRejectedValue(new Error('invalid refresh token'))
     const { result } = setup()

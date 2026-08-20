@@ -19,6 +19,7 @@ export function AuthProvider({ children }) {
         setLoading(false)
       })
       .catch(() => {
+        // token de sessão inválido/expirado: limpa em vez de travar em loading
         supabase.auth.signOut()
         setLoading(false)
       })
