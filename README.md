@@ -44,6 +44,7 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em
 | Busca em tempo real | Filtra produtos por nome e descrição |
 | Categorias sticky | Nav fixa no topo com scroll-spy |
 | Mobile-first | Layout max 480px |
+| Acessibilidade | ARIA roles nos modais, navegação por teclado (Tab preso no diálogo, Esc fecha), foco visível |
 
 ### Cardápio & Carrinho
 | Feature | Descrição |
@@ -71,6 +72,14 @@ Cardápio digital para a lanchonete fictícia **Crocodilo Burguer**, com foco em
 | Avatar | Inicial do nome do usuário logado no header |
 | Sessão persistente | Token gerenciado pelo Supabase, continua logado após fechar |
 | Menu do usuário | Dropdown com Minha Conta, Endereços, Cartões e Ajuda |
+
+### Perfil & Conta
+| Feature | Descrição |
+|---|---|
+| Minha Conta | Editar nome e trocar senha, sincronizado com o Supabase |
+| Meus Endereços | Cadastro com busca automática de endereço pelo CEP (API ViaCEP) |
+| Cartões Salvos | Preview visual do cartão com detecção de bandeira, dados só no dispositivo |
+| Central de Ajuda | FAQ em acordeão + contato via WhatsApp |
 
 ### Checkout & Pagamento
 | Feature | Descrição |
@@ -130,6 +139,12 @@ npm run dev -- --host
 
 Abra o IP que aparecer no terminal.
 
+### Rodar os testes
+
+```bash
+npm test
+```
+
 ---
 
 ## Tecnologias
@@ -138,8 +153,9 @@ Abra o IP que aparecer no terminal.
 - **Vite 5** — Build e dev server com HMR
 - **Supabase** — Autenticação e banco de dados PostgreSQL em nuvem
 - **CSS puro** — Custom properties, animações, mobile-first
-- **LocalStorage** — Persistência do carrinho (dado temporário de sessão)
+- **LocalStorage** — Persistência do carrinho, endereços e cartões (dados locais do dispositivo)
 - **SVG** — Logo, QR Code do PIX e bandeiras de cartão gerados via código
+- **Vitest + Testing Library** — Testes automatizados do carrinho e da autenticação
 
 ---
 
@@ -162,14 +178,13 @@ Coisas que ficariam pra uma v2:
 
 - Painel admin para gerenciar o cardápio
 - Integração de pagamento real (Stripe / Mercado Pago)
-- Testes automatizados (Vitest + Testing Library)
 - PWA com cache offline
 
 ---
 
 ## Limitações conhecidas
 
-- O carrinho fica no navegador — se limpar o cache, perde os itens não finalizados
+- O carrinho, endereços e cartões salvos ficam no navegador — se limpar o cache ou trocar de dispositivo, os dados não acompanham
 - Sem rate limiting no login (daria pra implementar com Supabase Edge Functions)
 - O QR Code do PIX é decorativo (não gera código EMV real)
 - Imagens dos produtos vêm do Unsplash — algumas podem não carregar se o CDN cair
