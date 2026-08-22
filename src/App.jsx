@@ -18,6 +18,7 @@ import MinhaConta from './components/MinhaConta'
 import MeusEnderecos from './components/MeusEnderecos'
 import CartoesSalvos from './components/CartoesSalvos'
 import Ajuda from './components/Ajuda'
+import LegalPage from './components/LegalPage'
 import Toast from './components/Toast'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
@@ -36,6 +37,7 @@ export default function App() {
   const [showEnderecos, setShowEnderecos] = useState(false)
   const [showCartoes, setShowCartoes] = useState(false)
   const [showAjuda, setShowAjuda] = useState(false)
+  const [legalPage, setLegalPage] = useState(null)
   const { toast, showToast } = useToast()
 
   const sectionRefs = useRef({})
@@ -162,6 +164,8 @@ export default function App() {
           <Footer
             onOrdersClick={() => setShowOrders(true)}
             onLoginClick={() => setShowAuth(true)}
+            onPrivacidadeClick={() => setLegalPage('privacidade')}
+            onTermosClick={() => setLegalPage('termos')}
           />
           <CartBar />
           <CartDrawer onCheckout={() => setShowCheckout(true)} showToast={showToast} />
@@ -184,6 +188,7 @@ export default function App() {
           {showEnderecos && <MeusEnderecos onClose={() => setShowEnderecos(false)} showToast={showToast} />}
           {showCartoes && <CartoesSalvos onClose={() => setShowCartoes(false)} showToast={showToast} />}
           {showAjuda && <Ajuda onClose={() => setShowAjuda(false)} />}
+          {legalPage && <LegalPage type={legalPage} onClose={() => setLegalPage(null)} />}
         </div>
       </CartProvider>
     </AuthProvider>

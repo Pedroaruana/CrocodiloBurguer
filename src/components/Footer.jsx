@@ -1,7 +1,7 @@
 import { restaurant } from '../data/menu'
 import './Footer.css'
 
-export default function Footer({ onOrdersClick, onLoginClick }) {
+export default function Footer({ onOrdersClick, onLoginClick, onPrivacidadeClick, onTermosClick }) {
   const year = new Date().getFullYear()
 
   return (
@@ -38,6 +38,12 @@ export default function Footer({ onOrdersClick, onLoginClick }) {
           >
             GitHub do projeto
           </a>
+          <button className="footer-link" onClick={onPrivacidadeClick}>
+            Política de Privacidade
+          </button>
+          <button className="footer-link" onClick={onTermosClick}>
+            Termos de Uso
+          </button>
         </div>
       </div>
 
