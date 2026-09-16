@@ -1,0 +1,14 @@
+# Crocodilo Burguer
+
+> Cardápio digital estilo Goomer, projeto de portfólio feito com React, Vite e Supabase. Não é um restaurante real, não processa pagamentos verdadeiros.
+
+## Sobre
+
+- Delivery fictício com carrinho, checkout simulado (PIX e cartão), autenticação real via Supabase e acompanhamento de pedidos
+- Código aberto sob licença MIT
+
+## Links
+
+- Site: https://crocodilo-burguer.vercel.app
+- Repositório: https://github.com/Pedroaruana/CrocodiloBurguer
+- Autor: Pedro Aruanã (https://github.com/Pedroaruana)
