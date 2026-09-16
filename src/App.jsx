@@ -19,6 +19,7 @@ import MeusEnderecos from './components/MeusEnderecos'
 import CartoesSalvos from './components/CartoesSalvos'
 import Ajuda from './components/Ajuda'
 import LegalPage from './components/LegalPage'
+import CookieBanner from './components/CookieBanner'
 import Toast from './components/Toast'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
@@ -189,6 +190,7 @@ export default function App() {
           {showCartoes && <CartoesSalvos onClose={() => setShowCartoes(false)} showToast={showToast} />}
           {showAjuda && <Ajuda onClose={() => setShowAjuda(false)} />}
           {legalPage && <LegalPage type={legalPage} onClose={() => setLegalPage(null)} />}
+          <CookieBanner onPrivacidadeClick={() => setLegalPage('privacidade')} />
         </div>
       </CartProvider>
     </AuthProvider>
