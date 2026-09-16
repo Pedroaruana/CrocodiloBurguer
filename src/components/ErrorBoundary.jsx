@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { logError } from '../lib/logger'
 
 const RESET_KEYS = ['croco-cart-v2', 'croco-session-v1', 'croco-orders-v1']
 
@@ -10,7 +11,7 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    console.error('App crashed:', error, info)
+    logError('App crashed', { error, info })
   }
 
   handleReset = () => {

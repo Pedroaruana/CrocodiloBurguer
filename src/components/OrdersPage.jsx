@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import { logError } from '../lib/logger'
 import './OrdersPage.css'
 
 const REFRESH_MS = 30_000
@@ -48,7 +49,7 @@ export async function saveOrder(order) {
     address: order.address,
     payment: order.payment,
   })
-  if (error) console.error('Erro ao salvar pedido:', error)
+  if (error) logError('Erro ao salvar pedido', error)
 }
 
 export default function OrdersPage({ onClose }) {
@@ -63,7 +64,8 @@ export default function OrdersPage({ onClose }) {
       .select('*')
       .eq('user_email', currentUser.email)
       .order('created_at', { ascending: false })
-    if (!error && data) setOrders(data)
+    if (error) { logError('Erro ao buscar pedidos', error); return }
+    setOrders(data)
   }
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { logError } from '../lib/logger'
 import './AuthModal.css'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -67,7 +68,7 @@ export default function AuthModal({ initialTab = 'login', onClose }) {
       }
       onClose()
     } catch (err) {
-      console.error('Erro no auth:', err)
+      logError('Erro no auth', err)
       if (mountedRef.current) setError('Algo deu errado. Tente novamente.')
     } finally {
       if (mountedRef.current) setLoading(false)
